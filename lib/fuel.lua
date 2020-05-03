@@ -1,17 +1,19 @@
-os.loadAPI("/lib/inv")
+os.loadAPI("/lib/inv.lua")
 
-COAL_ID = "minecraft:coal"
-
+-- refuel a turtle if necessary
+-- returns false if out of fuel
 function refuel(threshold)
-	threshold = threshold or turtle.getFuelLimit()
+	threshold = threshold or 80  -- value of one coal
 	initial_slot = turtle.getSelectedSlot()
-	if turtle.getFuelLevel() < threshold
+	while turtle.getFuelLevel() < threshold do
 		-- select coal
-		inv.select(COAL_ID)
-		-- refuel
-		-- TODO: handle if no more fuel?
-		turtle.refuel()
-		-- reset to inital inv position
-		turtle.select(initial_slot)
+		if not inv.selectFromTable(inv.FUEL) then
+			return false
+		end
+		-- refuel one at a time to not be wasteful
+		turtle.refuel(1)
 	end
+	-- reset to inital inv position
+	turtle.select(initial_slot)
+	return true
 end
