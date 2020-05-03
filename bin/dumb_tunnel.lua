@@ -12,6 +12,7 @@ while fuel.refuel() and not inv.isFull() do
 	turtle.dig()
 	turtle.down()
 	turtle.forward()
+	-- assume that everything worked bc I'm lazy
 	moved += 2
 end
 
