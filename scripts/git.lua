@@ -7,6 +7,8 @@ FILES = {
 	"/lib/inv.lua",
 	"/bin/dumb_tunnel.lua",
 	"/bin/test.lua",
+	"/bin/dumb_fell.lua",
+	"/scripts/git.lua",
 }
 
 function getFile(filename)
@@ -30,6 +32,9 @@ if not fs.exists("/lib") then
 end
 if not fs.exists("/bin") then
 	fs.makeDir("/bin")
+end
+if not fs.exists("/scripts") then
+	fs.makeDir("/scripts")
 end
 
 for _, file in ipairs(FILES) do

@@ -2,6 +2,7 @@
 FUEL = {
 	["minecraft:coal"]=80,
 	["minecraft:charcoal"]=80,
+	["minecraft:oak_planks"]=15,
 }
 
 -- select a block with given name
