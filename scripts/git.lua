@@ -11,22 +11,26 @@ FILES = {
 
 function getFile(filename)
 	-- download file from github
-	download = http.get(BASE_URL .. filename)
-	if download == nil then
+	local resp = http.get(BASE_URL .. filename)
+	if resp == nil then
 		print("Download failed for " .. BASE_URL .. filename)
+		return
 	end
-	contents = download.readAll()
 
 	-- write file
-	file = fs.open(filename, "w")
-	file.write(contents)
+	local file = fs.open(filename, "w")
+	file.write(resp.readAll())
 	file.close()
 end
 
 -- entry point
 -- make sure directories exist
-fs.makeDir("/lib")
-fs.makeDir("/bin")
+if not fs.exists("/lib") then
+	fs.makeDir("/lib")
+end
+if not fs.exists("/bin") then
+	fs.makeDir("/bin")
+end
 
 for _, file in ipairs(FILES) do
 	print("Downloading " .. file .. "...")
