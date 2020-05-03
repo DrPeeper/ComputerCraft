@@ -1,5 +1,5 @@
-os.loadApi("/lib/fuel.lua")
-os.loadApi("/lib/inv.lua")
+os.loadAPI("/lib/fuel.lua")
+os.loadAPI("/lib/inv.lua")
 
 moved = 0
 -- dig until out of fuel or inventory full
@@ -11,9 +11,10 @@ while fuel.refuel() and not inv.isFull() do
 	turtle.forward()
 	turtle.dig()
 	turtle.down()
+	turtle.dig()
 	turtle.forward()
 	-- assume that everything worked bc I'm lazy
-	moved += 2
+	moved = moved + 2
 end
 
 -- turn around
@@ -23,7 +24,7 @@ turtle.turnLeft()
 -- return to start position if fuel permits
 while fuel.refuel() and moved > 0 do
 	if turtle.forward() then
-		moved -= 1
+		moved = moved - 1
 	else
 		-- gravel could fall and obstruct the path
 		turtle.dig()

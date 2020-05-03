@@ -7,7 +7,7 @@ function refuel(threshold)
 	initial_slot = turtle.getSelectedSlot()
 	while turtle.getFuelLevel() < threshold do
 		-- select coal
-		if not inv.selectFirstFromTable(inv.FUEL) then
+		if not inv.selectFromTable(inv.FUEL) then
 			return false
 		end
 		-- refuel one at a time to not be wasteful
