@@ -10,12 +10,6 @@ function harvest()
 	
 	local success, lookingAt = turtle.inspect()
 	
-	-- Return false if front block is not harvestable
-	if success == false or lookingAt.name ~= WHEAT then -- What if there is no harvest but we can plant?
-		print("harvest(): Cannot harvest block")
-		return false
-	end
-
 	-- Only harvest if age is 7
 	if lookingAt.state.age == 7 then
 		turtle.dig()
@@ -30,12 +24,15 @@ function harvest()
 end
 
 -- Move one block to the left or right
-function moveOver(direction)
-	if direction then
+-- Keep the same direction
+function moveOver(left)
+	if left then
 		turtle.turnLeft()
 		fuel.refuel()
 		turtle.forward()
 		turtle.turnRight()
+	
+	-- if not left than right
 	else
 		turtle.turnRight()
 		fuel.refuel()
@@ -44,7 +41,7 @@ function moveOver(direction)
 	end
 end
 
-function harvestRow(direction, rowLength)
+function harvestRow(left, rowLength)
 	
 	local success, lookingAt = turtle.inspect()
 
@@ -53,11 +50,18 @@ function harvestRow(direction, rowLength)
 		if success == false or lookingAt.name == WHEAT then
 
 			harvest()
-			moveOver(direction)
 		end
+			moveOver(left)
 	end
 end
-		
+
+function moveRow(left)
+	
+	turtle.forward()
+	turtle.forward()
+	moveOver(not left)
+end
+
 function harvestFarm(farmLength, rowLength)
 	local direction = true
 
@@ -66,14 +70,12 @@ function harvestFarm(farmLength, rowLength)
 		harvestRow(direction, rowLength)
 		
 		-- move to next row
-		fuel.refuel()
-		turtle.forward()
-		turtle.forward()
-		moveOver(direction)	
+		moveRow(direction)	
 
 		direction = not direction
 	end
 
+--[==[
 	-- return home
 	
 	-- turn around
@@ -95,6 +97,6 @@ function harvestFarm(farmLength, rowLength)
 	turtle.turnRight()
 	
 end	
-
+--]==]
 harvestFarm(FARMLENGTH, ROWLENGTH)
 		
