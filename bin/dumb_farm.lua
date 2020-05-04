@@ -10,7 +10,7 @@ function harvest()
 	
 	local success, lookingAt = turtle.inspect()
 
-	if success == true and lookingAt.name = WHEAT and lookingAt.state.age ~= 7 then
+	if success == true and lookingAt.name == WHEAT and lookingAt.state.age ~= 7 then
 		return
 	end
 
@@ -48,6 +48,7 @@ function harvestRow(left, rowLength)
 
 		harvest()
 		moveOver(left)
+	end
 end
 
 function moveRow(left)
