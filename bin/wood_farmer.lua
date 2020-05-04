@@ -38,8 +38,8 @@ end
 
 function harvestPass()
 	-- start facing a tree on the left side of the farm
-	lookingAt = turtle.inspect()
-	if lookingAt == false then
+	local success, lookingAt = turtle.inspect()
+	if success == false then
 		error("turtle placed incorrectly")
 	end
 

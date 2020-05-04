@@ -1,4 +1,3 @@
--- TODO: change maxtrussell -> DrPeeper
 BASE_URL = "https://raw.githubusercontent.com/DrPeeper/ComputerCraft/master"
 
 -- add files here as our repo grows
@@ -8,7 +7,7 @@ FILES = {
 	"/bin/dumb_tunnel.lua",
 	"/bin/test.lua",
 	"/bin/dumb_fell.lua",
-	"/bin/wood_farmer.lua"
+	"/bin/wood_farmer.lua",
 	"/scripts/git.lua",
 }
 
