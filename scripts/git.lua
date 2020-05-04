@@ -1,5 +1,5 @@
 -- TODO: change maxtrussell -> DrPeeper
-BASE_URL = "https://raw.githubusercontent.com/maxtrussell/ComputerCraft/master"
+BASE_URL = "https://raw.githubusercontent.com/DrPeeper/ComputerCraft/master"
 
 -- add files here as our repo grows
 FILES = {
