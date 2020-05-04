@@ -3,6 +3,8 @@ os.loadAPI("/lib/fuel.lua")
 
 WHEAT = "minecraft:wheat"
 SEEDS = "minecraft:wheat_seeds"
+FARMLENGTH = 3
+ROWLENGTH = 8
 
 function harvest()
 	
@@ -94,5 +96,5 @@ function harvestFarm(farmLength, rowLength)
 	
 end	
 
-
+havestFarm(FARMLENGTH, ROWLENGTH)
 		
