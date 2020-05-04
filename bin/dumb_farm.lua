@@ -30,19 +30,21 @@ end
 -- Move one block to the left or right
 function moveOver(direction)
 	if direction then
-		turtle.turnRight()
-		fuel.refuel()
 		turtle.turnLeft()
+		fuel.refuel()
+		turtle.forward()
+		turtle.turnRight()
 	else
-		turtle.turnLeft()
-		fuel.refuel()
 		turtle.turnRight()
+		fuel.refuel()
+		turtle.forward()
+		turtle.turnLeft()
 	end
 end
 
 function harvestRow(direction, rowLength)
 	
-	local success, lookingAt = turtle.inpsect()
+	local success, lookingAt = turtle.inspect()
 
 	for i = 1, rowLength do
 		
