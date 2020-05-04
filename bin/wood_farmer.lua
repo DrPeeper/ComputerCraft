@@ -79,8 +79,11 @@ end
 print("Lumberjack protocol intializing...")
 fuel.refuel()
 while true do
-	print("Harvesting")
-	harvestPass()
-	print("Harvest completed. Sleeping.")
+	success, lookingAt = turtle.inspect()
+	if success and lookingAt.name == LOG then
+		print("Harvesting")
+		harvestPass()
+		print("Harvest completed. Sleeping.")
+	end
 	os.sleep(SLEEP_TIME)
 end
