@@ -1,13 +1,17 @@
--- TODO: change maxtrussell -> DrPeeper
-BASE_URL = "https://raw.githubusercontent.com/maxtrussell/ComputerCraft/master"
+BASE_URL = "https://raw.githubusercontent.com/DrPeeper/ComputerCraft/master"
 
 -- add files here as our repo grows
 FILES = {
 	"/lib/fuel.lua",
 	"/lib/inv.lua",
+	"/lib/nav.lua",
+	"/lib/quarry.lua",
 	"/bin/dumb_tunnel.lua",
 	"/bin/test.lua",
 	"/bin/dumb_fell.lua",
+	"/bin/dumb_farm.lua",
+	"/bin/wood_farmer.lua",
+	"/bin/dumb_farm.lua",
 	"/scripts/git.lua",
 }
 
