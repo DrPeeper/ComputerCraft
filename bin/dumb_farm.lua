@@ -5,6 +5,7 @@ WHEAT = "minecraft:wheat"
 SEEDS = "minecraft:wheat_seeds"
 FARMLENGTH = 3
 ROWLENGTH = 8
+SLEEP = 1500
 
 function harvest()
 	
@@ -101,6 +102,8 @@ function harvestFarm(farmLength, rowLength)
 	turtle.forward()
 	turtle.turnRight()
  
-end	
-harvestFarm(FARMLENGTH, ROWLENGTH)
-		
+end
+
+while true do
+	harvestFarm(FARMLENGTH, ROWLENGTH)
+	os.sleep(SLEEP)	
