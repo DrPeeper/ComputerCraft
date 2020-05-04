@@ -106,4 +106,5 @@ end
 
 while true do
 	harvestFarm(FARMLENGTH, ROWLENGTH)
-	os.sleep(SLEEP)	
+	os.sleep(SLEEP)
+end
