@@ -9,7 +9,9 @@ FILES = {
 	"/bin/dumb_tunnel.lua",
 	"/bin/test.lua",
 	"/bin/dumb_fell.lua",
+	"/bin/dumb_farm.lua",
 	"/bin/wood_farmer.lua",
+	"/bin/dumb_farm.lua",
 	"/scripts/git.lua",
 }
 
