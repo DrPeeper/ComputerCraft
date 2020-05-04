@@ -1,10 +1,3 @@
--- TODO: add blaze rods, bamboo, kelp, etc.
-FUEL = {
-	["minecraft:coal"]=80,
-	["minecraft:charcoal"]=80,
-	["minecraft:oak_planks"]=15,
-}
-
 -- select a block with given name
 function selectByName(name)
 	for i = 1,16 do
@@ -39,4 +32,19 @@ function isFull()
 		end
 	end
 	return true
+end
+
+-- drop all items from inventory execpt those in provided table
+function dropAllExcept(keep)
+    initial_slot = turtle.getSelectedSlot()
+    for i = 1,16 do
+        item = turtle.getItemDetail(i)
+        if item ~= nil and keep[item.name] == nil then
+            -- found item not in keep
+            turtle.select(i)
+            turtle.drop()
+        end
+    end
+    -- reselect initial slot
+    turtle.select(initial_slot)
 end
