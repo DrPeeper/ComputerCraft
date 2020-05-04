@@ -3,7 +3,7 @@ os.loadAPI("/lib/inv.lua")
 -- takes prefered seed name
 -- if prefered seed not found plants any seed
 function plant(seed)
-	if not inv.selectByTable(inv.SEEDS) and if not inv.selectByName(seed) then
+	if not inv.selectByTable(inv.SEEDS) and not inv.selectByName(seed) then
 		print("out of seeds:(")
 	else
 		turtle.place()
@@ -16,5 +16,6 @@ function harvest()
 	if  crop ~= nil then
 		turtle.dig()
 		plant(inv.CROPS[crop.name])
+	end
 end
 
