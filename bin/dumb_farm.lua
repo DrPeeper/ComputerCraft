@@ -9,7 +9,7 @@ function harvest()
 	local success, lookingAt = turtle.inspect()
 	
 	-- Return false if front block is not harvestable
-	if success == false or lookingAt.name ~= WHEAT then
+	if success == false or lookingAt.name ~= WHEAT then -- What if there is no harvest but we can plant?
 		print("harvest(): Cannot harvest block")
 		return false
 	end
@@ -17,99 +17,57 @@ function harvest()
 	-- Only harvest if age is 7
 	if lookingAt.state.age == 7 then
 		turtle.dig()
+		if not inv.selectByName(SEEDS) then
+			print("harvest(): out of seeds")
+		else
+			turtle.place()
+		end
 	end
 
 	return true
 end
 
-function plant()
-
-	local success, lookingAt = turtle.inspect()
-
-	-- If something is here error
-	if success == true then
-		print("plant(): Not plantable")
-		return false
+-- Move one block to the left or right
+function moveOver(direction)
+	if direction then
+		turtle.turnRight()
+		fuel.refuel()
+		turtle.turnLeft()
+	else
+		turtle.turnLeft()
+		fuel.refuel()
+		turtle.turnRight()
 	end
-
-	-- Hoe dirt
-	turtle.dig()
-	
-	-- Select seeds
-	if inv.selectByName(SEEDS) == false then
-		print("plant(): Out of seeds")
-		return false
-	end
-
-	-- Plant seeds
-	turtle.place()
-
-	return true
 end
 
 function harvestRow(direction, rowLength)
 	
 	local success, lookingAt = turtle.inpsect()
-	
-	if direction == "left" then
+
+	for i = 1, rowLength do
 		
-		for i = 1, rowLength do	
+		if success == false or lookingAt.name == WHEAT then
 
-			if lookingAt == WHEAT or success == false then
-
-				harvest()
-				plant()
-
-				-- move one block to the left
-				turtle.turnLeft()
-				fuel.refuel()
-				turtle.forward()
-				turtle.turnRight()
-			end
-		end
-	end
-
-	if direction == "right" then
-
-		for i = 1, rowLength do
-
-			if lookingAt == WHEAT or success == false then
-
-				harvest()
-				plant()
-
-				-- move one block to the right
-				turtle.turnRight()
-				fuel.refuel()
-				turtle.forward()
-				turtle.turnLeft()
-			end
+			harvest()
+			moveOver(direction)
 		end
 	end
 end
-
+		
 function harvestFarm(farmLength, rowLength)
+	local direction = true
 
-	for i = 1, farmLength do
-		harvestRow("left", rowLength)
+	for i = 1, farmLength * 2 do
+		
+		harvestRow(direction, rowLength)
 		
 		-- move to next row
 		fuel.refuel()
 		turtle.forward()
 		turtle.forward()
-		turtle.turnRight()
-		turtle.forward()
-		turtle.turnLeft()
+		moveOver(direction)	
 
-		harvestRow("right", rowLength)
-		
-		-- move to next row
-		fuel.refuel()
-		turtle.forward()
-		turtle.forward()
-		turtle.turnLeft()
-		turtle.forward()
-		turtle.turnRight()
+		direction = not direction
 	end
 
 	-- return home
