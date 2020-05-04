@@ -9,18 +9,17 @@ ROWLENGTH = 8
 function harvest()
 	
 	local success, lookingAt = turtle.inspect()
-	
-	-- Only harvest if age is 7
-	if lookingAt.state.age == 7 then
-		turtle.dig()
-		if not inv.selectByName(SEEDS) then
-			print("harvest(): out of seeds")
-		else
-			turtle.place()
-		end
+
+	if success == true and lookingAt.name = WHEAT and lookingAt.state.age ~= 7 then
+		return
 	end
 
-	return true
+	turtle.dig()
+	if not inv.selectByName(SEEDS) then
+		print("harvest(): out of seeds")
+	else
+		turtle.place()
+	end
 end
 
 -- Move one block to the left or right
@@ -46,13 +45,9 @@ function harvestRow(left, rowLength)
 	local success, lookingAt = turtle.inspect()
 
 	for i = 1, rowLength do
-		
-		if success == false or lookingAt.name == WHEAT then
 
-			harvest()
-		end
-			moveOver(left)
-	end
+		harvest()
+		moveOver(left)
 end
 
 function moveRow(left)
@@ -95,8 +90,8 @@ function harvestFarm(farmLength, rowLength)
 	fuel.refuel()
 	turtle.forward()
 	turtle.turnRight()
-	
-end	
 --]==]
+
+end	
 harvestFarm(FARMLENGTH, ROWLENGTH)
 		
