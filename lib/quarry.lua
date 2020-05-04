@@ -8,7 +8,7 @@ function quarry(width, depth, height)
 	nav.forceForward()
 	for i = 1,height do
 		for j = 1,width do
-			for k = 1,depth do
+			for k = 1,depth-1 do
 				nav.forceForward()
 			end
 			-- just finished digging one row
@@ -33,7 +33,6 @@ function quarry(width, depth, height)
 			nav.forceUp()
 			turtle.turnLeft()
 			turtle.turnLeft()
-			facingForward = not facingForward
 		end
 	end
 end
