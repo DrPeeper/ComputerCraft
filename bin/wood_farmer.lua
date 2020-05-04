@@ -51,14 +51,14 @@ function fellTree()
 end
 
 function harvestPass()
-	-- start facing a tree on the left side of the farm
-	local success, lookingAt = turtle.inspect()
-	if success == false then
-		error("turtle placed incorrectly")
-	end
-
 	-- harvest trees
 	while true do
+		-- start facing a tree on the left side of the farm
+		local success, lookingAt = turtle.inspect()
+		if success == false then
+			error("turtle placed incorrectly")
+		end
+
 		-- chop tree if ready
 		if lookingAt.name == LOG then
 			fellTree()
@@ -84,7 +84,7 @@ end
 print("Lumberjack protocol intializing...")
 fuel.refuel()
 while true do
-	success, lookingAt = turtle.inspect()
+	local success, lookingAt = turtle.inspect()
 	if success and lookingAt.name == LOG then
 		print("Harvesting")
 		harvestPass()
