@@ -71,7 +71,6 @@ function harvestFarm(farmLength, rowLength)
 		direction = not direction
 	end
 
---[==[
 	-- return home
 	
 	-- turn around
@@ -86,13 +85,22 @@ function harvestFarm(farmLength, rowLength)
 		turtle.forward()
 	end
 
+	-- get fuel
+	turtle.turnLeft()
+	turtle.suck()
+	
+	-- deposite wheat
+	turtle.turnRight()
+	while inv.selectByName(WHEAT) do
+		turtle.drop()
+	end
+	
 	-- go to starting position
 	turtle.turnRight()
 	fuel.refuel()
 	turtle.forward()
 	turtle.turnRight()
---]==]
-
+ 
 end	
 harvestFarm(FARMLENGTH, ROWLENGTH)
 		
