@@ -4,6 +4,8 @@ BASE_URL = "https://raw.githubusercontent.com/DrPeeper/ComputerCraft/master"
 FILES = {
 	"/lib/fuel.lua",
 	"/lib/inv.lua",
+	"/lib/nav.lua",
+	"/lib/quarry.lua",
 	"/bin/dumb_tunnel.lua",
 	"/bin/test.lua",
 	"/bin/dumb_fell.lua",
