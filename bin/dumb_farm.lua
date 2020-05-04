@@ -96,5 +96,5 @@ function harvestFarm(farmLength, rowLength)
 	
 end	
 
-havestFarm(FARMLENGTH, ROWLENGTH)
+harvestFarm(FARMLENGTH, ROWLENGTH)
 		
