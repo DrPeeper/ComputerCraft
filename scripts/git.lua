@@ -8,6 +8,7 @@ FILES = {
 	"/bin/dumb_tunnel.lua",
 	"/bin/test.lua",
 	"/bin/dumb_fell.lua",
+	"/bin/wood_farmer.lua"
 	"/scripts/git.lua",
 }
 
