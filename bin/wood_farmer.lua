@@ -32,7 +32,12 @@ function fellTree()
 	turtle.forward()
 
 	-- chop tree
-	while turtle.digUp() do
+	while true do
+		local success, lookingAt = turtle.inspectUp()
+		if not success or lookingAt.name ~= LOG then
+			break
+		end
+		turtle.digUp()
 		fuel.refuel()
 		turtle.up()
 	end
