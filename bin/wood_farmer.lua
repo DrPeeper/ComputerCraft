@@ -2,6 +2,7 @@ os.loadAPI("/lib/inv.lua")
 os.loadAPI("/lib/fuel.lua")
 
 LOG = "minecraft:oak_log"
+SAPLING = "minecraft:oak_sapling"
 SLEEP_TIME = 300
 
 function nextTree()
@@ -15,6 +16,14 @@ function nextTree()
 	end
 	turtle.turnLeft()
 	return true
+end
+
+function plant()
+	if inv.selectByName(SAPLING) then
+		turtle.place()
+	else
+		print("out of saplings")
+	end
 end
 
 function fellTree()
@@ -48,6 +57,7 @@ function harvestPass()
 		-- chop tree if ready
 		if lookingAt.name == LOG then
 			fellTree()
+			plant()
 		end
 		if not nextTree() then
 			-- reached end of row
@@ -67,6 +77,7 @@ function harvestPass()
 end
 
 print("Lumberjack protocol intializing...")
+fuel.refuel()
 while true do
 	print("Harvesting")
 	harvestPass()
