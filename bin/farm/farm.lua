@@ -27,10 +27,10 @@ function farm(columns, rows)
 				farmer.plant(farmer.CROPS[crop.name])
 			else
 				farmer.harvest()
-			turtle.turnLeft()
-			turtle.turnLeft()
-
 			end
+
+			turtle.turnLeft()
+			turtle.turnLeft()
 
 			crop = inv.inspectWithTable(farmer.CROPS)
 			turtle.dig()
