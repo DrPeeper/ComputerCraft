@@ -20,7 +20,9 @@ function farm(columns, rows)
 		for j = 1, columns do
 
 			-- turn around and plant the last plant
-			turtle.turnRight()
+			turtle.turnLeft()
+			turtle.turnLeft()
+
 			if crops ~= nil then
 				turtle.dig()
 				farmer.plant(farmer.CROPS[crop.name])
@@ -43,6 +45,7 @@ function farm(columns, rows)
 			-- harvest right side
 			turtle.turnRight()
 			farmer.harvest()
+			turtle.turnLeft()
 
 		end
 
