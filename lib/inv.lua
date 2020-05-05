@@ -71,11 +71,11 @@ function restack()
                     -- previous stack full, selected slot empty
                     inv[item.name] = nil
                 end
-
-            elseif turtle.getItemSpace(i) > 0 then
-                -- add item to inv if not there and still has space
-                inv[item.name] = {["space"]=turtle.getItemSpace(i), ["slot"]=i}
             end
+
+        elseif turtle.getItemSpace(i) > 0 then
+            -- add item to inv if not there and still has space
+            inv[item.name] = {["space"]=turtle.getItemSpace(i), ["slot"]=i}
         end
     end
     turtle.select(initial_slot)
