@@ -20,8 +20,14 @@ function plant(seed)
 	end
 end
 
-function harvest()	
+function harvest()
+	crop = inv.inspectWithTable(CROPS)
 	turtle.dig()
-	plant(CROPS[crop.name])
+	if crop ~= nil then
+		plant(CROPS[crop.name])
+	else
+		plant("")
+	end
+
 end
 
