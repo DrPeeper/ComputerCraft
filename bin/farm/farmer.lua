@@ -13,7 +13,7 @@ CROPS = {
 -- takes prefered seed name
 -- if prefered seed not found plants any seed
 function plant(seed)
-	if not inv.selectFromTable(SEEDS) and not selectByName(seed) then
+	if not inv.selectFromTable(SEEDS) and not inv.selectByName(seed) then
 		print("out of seeds:(")
 	else
 		turtle.place()
