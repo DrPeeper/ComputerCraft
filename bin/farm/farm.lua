@@ -43,7 +43,7 @@ function farm(columns, rows)
 		end
 
 		turtle.refuel()	
-		if  i ~= rows/3 then
+		if  j ~= rows/3 then
 			-- go to next row
 			if left then 
 				turtle.turnLeft()
