@@ -21,11 +21,7 @@ function plant(seed)
 end
 
 function harvest()	
-	-- check if crop can be harvested
-	crop = inv.inspectWithTable(CROPS)
-	if  crop ~= nil then
-		turtle.dig()
-		plant(CROPS[crop.name])
-	end
+	turtle.dig()
+	plant(CROPS[crop.name])
 end
 
