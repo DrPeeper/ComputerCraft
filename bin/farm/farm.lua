@@ -24,23 +24,23 @@ function farm(columns, rows)
 			if crop ~= nil then
 				turtle.turnLeft()
 				turtle.turnLeft()
-				farmer.plant(inv.CROPS[crop.name])
+				farmer.plant(farmer.CROPS[crop.name])
 				turtle.turnLeft()
 				turtle.turnLeft()
 			end
 
-			crop = inv.inspectWithTable(inv.CROPS)
+			crop = farmer.inspectWithTable(inv.CROPS)
 			turtle.dig()
 			turtle.forward()
 
 			-- harvest left side
 			turtle.turnLeft()
-			harvest.harvest()
+			farmer.harvest()
 			turtle.turnRight()
 
 			-- harvest right side
 			turtle.turnRight()
-			harvest.harvest()
+			farmer.harvest()
 			turtle.turnLeft()
 
 		end
