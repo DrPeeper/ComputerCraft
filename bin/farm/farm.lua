@@ -42,16 +42,17 @@ function farm(columns, rows)
 
 		end
 
+		
+		-- plant last column
+		turtle.turnLeft()
+		turtle.turnLeft()
+		farmer.harvest()
+		turtle.turnLeft()
+		turtle.turnLeft()
+
 		turtle.refuel()	
 		if  i ~= rows/3 then
 			print("next row")
-			turtle.forward()
-			-- plant last column
-			turtle.turnLeft()
-			turtle.turnLeft()
-			farmer.harvest()
-			turtle.turnLeft()
-			turtle.turnLeft()
 
 			-- go to next row
 			if left then 
@@ -77,13 +78,14 @@ function farm(columns, rows)
 
 	-- go home	
 	turtle.turnLeft()
+	turtle.forward()
 	turtle.turnLeft()
 
 	for k = 1, columns + 1 do
 		turtle.forward()
 	end
 
-	if left then
+	if not left then
 		turtle.turnLeft()
 	else
 		turtle.turnRight()
@@ -93,7 +95,7 @@ function farm(columns, rows)
 		turtle.forward()
 	end
 	
-	if left then
+	if not left then
 		turtle.turnRight()
 	else
 		turtle.turnLeft()
