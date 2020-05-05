@@ -48,3 +48,35 @@ function dropAllExcept(keep)
     -- reselect initial slot
     turtle.select(initial_slot)
 end
+
+-- condense turtle inventory
+function restack()
+    local initial_slot = turtle.getSelectedSlot()
+    local inv = {}
+    for i = 1,16 do
+        local item = turtle.getItemDetail()
+        if item ~= nil then
+            -- stack with space already inventory
+            if inv[item.name] ~= nil then
+                turtle.select(i)
+                turtle.transfer(inv[item.name]["slot"])
+                local prev_space = turtle.getItemSpace(inv[item.name]["slot"])
+                if prev_space > 0 then
+                    -- previous stack still has space remaining
+                    inv[item.name]["space"] = prev_space
+                elseif turtle.getItemCount(i) > 0 then
+                    -- previous stack full, selected slot not empty
+                    inv[item.name] = {["space"]=turtle.getItemSpace(i), ["slot"]=i}
+                else
+                    -- previous stack full, selected slot empty
+                    inv[item.name] = nil
+                end
+
+            elseif turtle.getItemSpace(i) > 0 then
+                -- add item to inv if not there and still has space
+                inv[item.name] = {["space"]=turtle.getItemSpace(i), ["slot"]=i}
+            end
+        end
+    end
+    turtle.select(initial_slot)
+end
