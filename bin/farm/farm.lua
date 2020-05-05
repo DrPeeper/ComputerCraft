@@ -19,20 +19,6 @@ function farm(columns, rows)
 	for i = 1, rows/3 do
 		for j = 1, columns do
 
-			-- turn around and plant the last plant
-			turtle.turnLeft()
-			turtle.turnLeft()
-
-			if crops ~= nil then
-				turtle.dig()
-				farmer.plant(farmer.CROPS[crop.name])
-			else
-				farmer.harvest()
-			end
-
-			turtle.turnLeft()
-			turtle.turnLeft()
-
 			crop = inv.inspectWithTable(farmer.CROPS)
 			turtle.dig()
 			turtle.forward()
@@ -40,19 +26,24 @@ function farm(columns, rows)
 			-- harvest left side
 			turtle.turnLeft()
 			farmer.harvest()
-			turtle.turnRight()
 
+			-- harvest back side
+			turtle.turnLeft()	
+			if crops ~= nil then
+				turtle.dig()
+				farmer.plant(farmer.CROPS[crop.name])
+			else
+				farmer.harvest()
+			end
 			-- harvest right side
-			turtle.turnRight()
+			turtle.turnLeft()
 			farmer.harvest()
 			turtle.turnLeft()
 
 		end
 
-		crop = nil
-		turtle.refuel()
-	
-		if  j ~= rows/3 then
+		turtle.refuel()	
+		if  i ~= rows/3 then
 			-- go to next row
 			if left then 
 				turtle.turnLeft()
