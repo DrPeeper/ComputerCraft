@@ -18,7 +18,7 @@ function farm(columns, rows)
 
 	for i = 1, rows/3 do
 		for j = 1, columns do
-
+			print("next column")
 			crop = inv.inspectWithTable(farmer.CROPS)
 			turtle.dig()
 			turtle.forward()
