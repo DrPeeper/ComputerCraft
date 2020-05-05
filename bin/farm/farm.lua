@@ -23,9 +23,10 @@ function farm(columns, rows)
 			turtle.turnLeft()
 			turtle.turnLeft()
 			if crops ~= nil then
+				turtle.dig()
 				farmer.plant(farmer.CROPS[crop.name])
 			else
-				farmer.plant()
+				farmer.harvest()
 			turtle.turnLeft()
 			turtle.turnLeft()
 
