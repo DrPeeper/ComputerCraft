@@ -13,14 +13,13 @@ function farm(columns, rows)
 
 	local left = true
 	local crop = nil
-	
-	fuel.refuel()
 
 	for i = 1, rows/3 do
 		for j = 1, columns do
 			print("next column")
 			crop = inv.inspectWithTable(farmer.CROPS)
 			turtle.dig()
+			fuel.refuel()
 			turtle.forward()
 
 			-- harvest left side
@@ -49,8 +48,7 @@ function farm(columns, rows)
 		farmer.harvest()
 		turtle.turnLeft()
 		turtle.turnLeft()
-
-		turtle.refuel()	
+	
 		if  i ~= rows/3 then
 			print("next row")
 
@@ -60,8 +58,12 @@ function farm(columns, rows)
 			else
 				turtle.turnRight()
 			end
+		
+			fuel.refuel()
 			turtle.forward()
+			fuel.refuel()
 			turtle.forward()
+			fuel.refuel()
 			turtle.forward()
 
 			if left then
@@ -73,25 +75,29 @@ function farm(columns, rows)
 
 		left = not left
 	end
-
-	turtle.refuel()
-
-	-- go home	
-	turtle.turnLeft()
-	turtle.forward()
-	turtle.turnLeft()
-
-	for k = 1, columns + 1 do
-		turtle.forward()
-	end
-
+	
 	if not left then
 		turtle.turnLeft()
 	else
 		turtle.turnRight()
 	end
 
+	turtle.refuel()
+	turtle.forward()	
+	
+	if not left then
+		turtle.turnLeft()
+	else
+		turtle.turnRight()
+	end
+
+	for k = 1, columns + 1 do
+		fuel.refuel()
+		turtle.forward()
+	end
+
 	for z = 1, rows - 2 do
+		fuel.refuel()
 		turtle.forward()
 	end
 	
@@ -101,6 +107,7 @@ function farm(columns, rows)
 		turtle.turnLeft()
 	end
 
+	turtle.refuel()
 	turtle.forward()
 
 	--[===[
