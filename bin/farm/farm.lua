@@ -1,11 +1,8 @@
 os.loadAPI("/bin/farm/farmer.lua")
 os.loadAPI("/lib/inv.lua")
+os.loadAPI("/lib/fuel.lua")
 
--- fix one too far 
--- add refuel
--- add harvest
--- add plant(lookingAt)
--- add deposite harvest
+-- add deposit harvest
 -- destroy seeds?
 
 function farm(columns, rows)
@@ -16,6 +13,8 @@ function farm(columns, rows)
 
 	local left = true
 	local crop = nil
+	
+	fuel.refuel()
 
 	for i = 1, rows/3 do
 		for j = 1, columns do
@@ -29,7 +28,7 @@ function farm(columns, rows)
 				turtle.turnLeft()
 			end
 
-			crop = farmer.inspectWithTable(inv.CROPS)
+			crop = farmer.inspectWithTable(farmer.CROPS)
 			turtle.dig()
 			turtle.forward()
 
@@ -46,6 +45,7 @@ function farm(columns, rows)
 		end
 
 		crop = nil
+		turtle.refuel()
 	
 		if  j ~= rows/3 then
 			-- go to next row
@@ -67,6 +67,8 @@ function farm(columns, rows)
 
 		left = not left
 	end
+
+	turtle.refuel()
 
 	-- go home	
 	turtle.turnLeft()
