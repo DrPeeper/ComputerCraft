@@ -20,13 +20,14 @@ function farm(columns, rows)
 		for j = 1, columns do
 
 			-- turn around and plant the last plant
-			if crop ~= nil then
-				turtle.turnLeft()
-				turtle.turnLeft()
+			turtle.turnLeft()
+			turtle.turnLeft()
+			if crops ~= nil then
 				farmer.plant(farmer.CROPS[crop.name])
-				turtle.turnLeft()
-				turtle.turnLeft()
-			end
+			else
+				farmer.plant()
+			turtle.turnLeft()
+			turtle.turnLeft()
 
 			crop = inv.inspectWithTable(farmer.CROPS)
 			turtle.dig()

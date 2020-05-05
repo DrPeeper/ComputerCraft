@@ -26,7 +26,7 @@ function harvest()
 	if crop ~= nil then
 		plant(CROPS[crop.name])
 	else
-		plant("")
+		plant()
 	end
 
 end
