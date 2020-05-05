@@ -2,12 +2,12 @@ os.loadAPI("/lib/inv.lua")
 
 SEEDS = {
 	["minecraft:wheat_seeds"]=7,
-	["minecraft:potatoe"]=7,
+	["minecraft:potato"]=7,
 }
 
 CROPS = {
 	["minecraft:wheat"]="minecraft:wheat_seeds",
-	["minecraft:potatoe"]="minecraft:potatoe",
+	["minecraft:potato"]="minecraft:potato",
 }
 
 -- takes prefered seed name
