@@ -73,7 +73,7 @@ function farm(columns, rows)
 	turtle.turnLeft()
 	turtle.turnLeft()
 
-	for i = 1, column+1 do
+	for k = 1, column+1 do
 		turtle.forward()
 	end
 
@@ -83,7 +83,7 @@ function farm(columns, rows)
 		turtle.turnRight()
 	end
 
-	for i = 1, row - 2 do
+	for z = 1, row - 2 do
 		turtle.forward()
 	end
 	
