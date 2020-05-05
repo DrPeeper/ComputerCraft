@@ -5,16 +5,6 @@ FUEL = {
 	["minecraft:oak_planks"]=15,
 }
 
-SEEDS = {
-	["minecraft:wheat_seeds"]=7,
-	["minecraft:potatoes"]=7,
-}
-
-CROPS = {
-	["minecraft:wheat"]="minecraft:wheat_seeds",
-	["minecraft:potatoes"]="minecraft:potatoes",
-}
-
 
 -- select a block with given name
 function selectByName(name)
