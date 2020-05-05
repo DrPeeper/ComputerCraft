@@ -28,7 +28,7 @@ function farm(columns, rows)
 				turtle.turnLeft()
 			end
 
-			crop = farmer.inspectWithTable(farmer.CROPS)
+			crop = inv.inspectWithTable(farmer.CROPS)
 			turtle.dig()
 			turtle.forward()
 
