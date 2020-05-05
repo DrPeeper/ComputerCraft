@@ -42,6 +42,8 @@ function farm(columns, rows)
 			turtle.turnRight()
 			farmer.harvest()
 			turtle.turnLeft()
+			
+			end
 
 		end
 
