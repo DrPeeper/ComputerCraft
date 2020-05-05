@@ -45,6 +45,8 @@ function farm(columns, rows)
 		turtle.refuel()	
 		if  i ~= rows/3 then
 			print("next row")
+			turtle.forward()
+
 			-- go to next row
 			if left then 
 				turtle.turnLeft()
