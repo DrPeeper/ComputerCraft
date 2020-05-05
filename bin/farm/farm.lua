@@ -30,6 +30,8 @@ function farm(columns, rows)
 			turtle.turnLeft()
 			turtle.turnLeft()
 
+			end
+
 			crop = inv.inspectWithTable(farmer.CROPS)
 			turtle.dig()
 			turtle.forward()
@@ -43,8 +45,6 @@ function farm(columns, rows)
 			turtle.turnRight()
 			farmer.harvest()
 			turtle.turnLeft()
-			
-			end
 
 		end
 
