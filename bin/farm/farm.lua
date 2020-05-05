@@ -7,7 +7,7 @@ os.loadAPI("/lib/fuel.lua")
 
 function farm(columns, rows)
 	
-	if (row % 3 ~= 0) then
+	if (rows % 3 ~= 0) then
 		error("Turtle needs rows to be divisible by 3")
 	end
 
