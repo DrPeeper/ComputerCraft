@@ -3,7 +3,14 @@ os.loadAPI("/lib/fuel.lua")
 
 LOG = "minecraft:oak_log"
 SAPLING = "minecraft:oak_sapling"
+CARRY = {
+	[LOG] = true,
+	[SAPLING] = true,
+}
 SLEEP_TIME = 300
+
+-- add any potential fuel source to VALUABLES
+for k,v in pairs(fuel.FUEL) do CARRY[k] = v end
 
 function nextTree()
 	-- move to next tree
