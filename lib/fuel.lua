@@ -1,5 +1,12 @@
 os.loadAPI("/lib/inv.lua")
 
+-- TODO: add blaze rods, bamboo, kelp, etc.
+FUEL = {
+	["minecraft:coal"]=80,
+	["minecraft:charcoal"]=80,
+	["minecraft:oak_planks"]=15,
+}
+
 -- refuel a turtle if necessary
 -- returns false if out of fuel
 function refuel(threshold)
@@ -7,7 +14,7 @@ function refuel(threshold)
 	initial_slot = turtle.getSelectedSlot()
 	while turtle.getFuelLevel() < threshold do
 		-- select coal
-		if not inv.selectFromTable(inv.FUEL) then
+		if not inv.selectFromTable(FUEL) then
 			return false
 		end
 		-- refuel one at a time to not be wasteful
