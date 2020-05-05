@@ -59,7 +59,7 @@ function restack()
             -- stack with space already inventory
             if inv[item.name] ~= nil then
                 turtle.select(i)
-                turtle.transfer(inv[item.name]["slot"])
+                turtle.transferTo(inv[item.name]["slot"])
                 local prev_space = turtle.getItemSpace(inv[item.name]["slot"])
                 if prev_space > 0 then
                     -- previous stack still has space remaining
@@ -71,11 +71,11 @@ function restack()
                     -- previous stack full, selected slot empty
                     inv[item.name] = nil
                 end
-
-            elseif turtle.getItemSpace(i) > 0 then
-                -- add item to inv if not there and still has space
-                inv[item.name] = {["space"]=turtle.getItemSpace(i), ["slot"]=i}
             end
+
+        elseif turtle.getItemSpace(i) > 0 then
+            -- add item to inv if not there and still has space
+            inv[item.name] = {["space"]=turtle.getItemSpace(i), ["slot"]=i}
         end
     end
     turtle.select(initial_slot)
