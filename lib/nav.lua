@@ -136,4 +136,4 @@ function forceUp(n)
 			turtle.digUp()
 		end
 	end
-
+end
