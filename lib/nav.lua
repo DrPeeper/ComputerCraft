@@ -71,7 +71,7 @@ end
 -- record the given turn
 function rTurn(cmd)
 	if dirInputs[cmd] ~= nil then
-		direction = directions[directions.direction + dirInputs[cmd] % 4]
+		direction = directions[directions[direction] + dirInputs[cmd] % 4]
 	end
 end
 
@@ -79,7 +79,7 @@ end
 function rMove(cmd)
 	if mvInputs[cmd] ~= nil then
 		for i,v in pairs(pos) do
-			pos[i] = v + mvInputs[cmd].direction[i]
+			pos[i] = v + mvInputs[cmd][direction][i]
 		end
 	end
 end
