@@ -6,8 +6,6 @@ FILES = {
 	"/lib/inv.lua",
 	"/lib/nav.lua",
 	"/lib/quarry.lua",
-	"/bin/dumb_tunnel.lua",
-	"/bin/test.lua",
 	"/bin/dumb_fell.lua",
 	"/bin/dumb_farm.lua",
 	"/bin/wood_farmer.lua",
