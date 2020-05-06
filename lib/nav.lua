@@ -23,7 +23,7 @@ mvInputs = {
 		["west"] = {-1,0,0},
 		["south"] = {0,-1,0},
 		["east"] = {1,0,0},
-	}
+	},
 
 	[turtle.back] = {
 			
@@ -31,7 +31,7 @@ mvInputs = {
 		["west"] = {1,0,0},
 		["south"] = {0,1,0},
 		["east"] = {-1,0,0},
-	}
+	},
 
 	[turtle.up] = {
 		
@@ -39,7 +39,7 @@ mvInputs = {
 		["west"] = {0,0,1},
 		["south"] = {0,0,1},
 		["east"] = {0,0,1},
-	}
+	},
 
 	[turtle.down] = {
 		
@@ -47,7 +47,7 @@ mvInputs = {
 		["west"] = {0,0,-1},
 		["south"] = {0,0,-1},
 		["east"] = {0,0,-1},
-	}
+	},
 }
 
 -- initialize starting position
