@@ -13,6 +13,10 @@ directions = {
 	["west"] = 1,
 	["south"] = 2,
 	["east"] = 3,
+	[0] = "north",
+	[1] = "west",
+	[2] = "south",
+	[3] = "east",
 }
 
 mvInputs = {
@@ -132,4 +136,4 @@ function forceUp(n)
 			turtle.digUp()
 		end
 	end
-end
+
