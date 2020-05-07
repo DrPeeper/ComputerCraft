@@ -81,8 +81,7 @@ function rCmd(cmd)
 	-- if turn command
 	if dirInputs[cmd] then
 		direction = directions[directions[direction] + dirInputs[cmd] % 4]
-	else
-		error("unkown command")
+
 	end
 end
 
