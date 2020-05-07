@@ -80,7 +80,7 @@ function rCmd(cmd)
 	end
 	-- if turn command
 	if dirInputs[cmd] then
-		direction = directions[directions[direction] + dirInputs[cmd] % 4]
+		direction = directions[(directions[direction] + dirInputs[cmd]) % 4]
 
 	end
 end
