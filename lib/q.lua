@@ -21,8 +21,8 @@ end
 function popQ(q)
 	if not qIsEmpty(q) then
 		item = q[q["bottom"]]
-		q["bottom"] = q["bottom"] + 1
 		q[q["bottom"]] = nil
+		q["bottom"] = q["bottom"] + 1
 		return item
 	end
 end
