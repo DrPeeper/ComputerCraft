@@ -137,7 +137,7 @@ end
 
 -- move to given direction
 function turnTo(destDir)
-	if directions[destDir] then
+	if directions[destDir] ~= nil then
 		if math.abs(directions[direction] - directions[destDir]) == 2 then
 			return turnAround()
 		end
