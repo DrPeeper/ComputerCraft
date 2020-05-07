@@ -55,52 +55,99 @@ mvInputs = {
 }
 
 -- initialize starting position
+-- DoNt FoRgEt
 function init()
 	direction = "north"
 	pos = {0,0,0}
 end
 
-function pos()
+-- getter functions
+function getPos()
 	return pos
 end
 
-function direction()
+function getDirection()
 	return direction
-end
-
--- record the given turn
-function rTurn(cmd)
-	if dirInputs[cmd] ~= nil then
-		direction = directions[directions[direction] + dirInputs[cmd] % 4]
-	end
-end
-
--- record movement
-function rMove(cmd)
-	if mvInputs[cmd] ~= nil then
-		for i,v in pairs(pos) do
-			pos[i] = v + mvInputs[cmd][direction][i]
-		end
-	end
 end
 
 -- record turn or movement
 function rCmd(cmd)
-	if mvInputs[cmd] ~= nil then
-		rMove(cmd)
+	-- if movement command
+	if mvInputs[cmd] then
+		for i,v in pairs(pos)do
+			pos[i] = v + mvInputs[cmd][direction][i]
+		end
+	end
+	-- if turn command
+	if dirInputs[cmd] then
+		direction = directions[directions[direction] + dirInputs[cmd] % 4]
 	else
-		rTurn(cmd)
+		error("unkown command")
 	end
 end
--- do turn or movement
--- returns success if movement was possible
+
+-- complete turn or movement
+-- given turtle movement or turn command
+-- returns success if movement or turn was possible
 function nav(cmd)
-	fuel.refuel()
-	if cmd() then
-		rCmd(cmd)
-		return true
+	if mvInputs[cmd] or dirInputs[cmd] then
+		fuel.refuel()
+		if cmd() then
+			rCmd(cmd)
+			return true
+		end
 	end
 	return false
+end
+
+-- wrapper turtle move/turn functions
+function turnLeft()
+	return nav(turtle.turnLeft)
+end
+
+function turnRight()
+	return nav(turtle.turnRight)
+end
+
+function forward()
+	return nav(turtle.forward)
+end
+
+function back()
+	return nav(turtle.back)
+end
+
+function up()
+	return nav(turtle.up)
+end
+
+function down()
+	return nav(turtle.down)
+end
+
+-- turn around
+function turnAround()
+	if turnLeft() then
+		if turnLeft() then
+			return true
+		else
+			return turnRight() and turnRight() and turnRight()
+		end
+	end
+end
+
+-- move to given direction
+function turnTo(destDir)
+	if directions[destDir] then
+		if math.abs(directions[direction] - directions[destDir]) == 2 then
+			return turnAround()
+		end
+		if directions[directions[direction] + 1 % 4] == destDir then
+			return nav(turtle.turnLeft)
+		end
+		return nav(turtle.turnRight)
+
+	end
 end
 
 -- move forward n blocks
@@ -119,7 +166,6 @@ function forceForward(n)
 		end
 	end
 end
-
 
 -- move up n blocks
 function forceUp(n)
