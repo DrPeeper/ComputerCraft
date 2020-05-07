@@ -22,15 +22,14 @@ function popQ(q)
 	if not qIsEmpty(q) then
 		item = q[q["bottom"]]
 		q["bottom"] = q["bottom"] + 1
+		q[q["bottom"]] = nil
 		return item
 	end
 end
 
 function printQ(q)
 	for i,v in pairs(q) do
-		if not i == "bottom" and not i == "top" then
-			print(i,v)
-		end
+		print(i,v)
 	end
 end
 
