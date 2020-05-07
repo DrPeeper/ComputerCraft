@@ -141,7 +141,7 @@ function turnTo(destDir)
 		if math.abs(directions[direction] - directions[destDir]) == 2 then
 			return turnAround()
 		end
-		if directions[directions[direction] + 1 % 4] == destDir then
+		if directions[(directions[direction] + 1) % 4] == destDir then
 			return nav(turtle.turnLeft)
 		end
 		return nav(turtle.turnRight)
