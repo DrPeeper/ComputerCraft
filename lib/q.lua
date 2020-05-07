@@ -1,7 +1,7 @@
 function q()
 	local queue = { 
-			["top"] = 0
-			["bottom"] = 1
+			["top"] = 0,
+			["bottom"] = 1,
 		}
 	return queue
 end
