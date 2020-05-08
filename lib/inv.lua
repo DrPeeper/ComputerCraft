@@ -89,3 +89,43 @@ function restack()
    end
    turtle.select(initial_slot)
 end
+
+-- returns a table representing the turtle's inventory
+function invTable()
+   local inv = {}
+   for i = 1,16 do
+      local item = turtle.getItemDetail(i)
+      inv[i] = item
+   end
+   return inv
+end
+
+-- TODO: make multidirectional
+function depositSome(toDeposit, count, down)
+   local remaining = count
+   while remaining > 0 do
+      -- select item
+      if not selectFromTable(toDeposit) then
+	 return count - remaining
+      end
+
+      -- deposit
+      item = turtle.getItemDetail()
+      if item.count >= remaining then
+	 if down then
+	    turtle.dropDown(remaining)
+	 else
+	    turtle.dropUp(remaining)
+	 end
+	 remaining = 0
+      else
+	 if down then
+	    turtle.dropDown()
+	 else
+	    turtle.dropUp()
+	 end
+	 remaining = remaining - item.count
+      end
+   end
+   return count - remaining  -- should be zero here
+end
