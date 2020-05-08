@@ -5,7 +5,7 @@ FILES = {
 	"/lib/fuel.lua",
 	"/lib/inv.lua",
 	"/lib/nav.lua",
-	"/lib/quarry.lua",
+	"/lib/dig.lua",
 	"/bin/dumb_fell.lua",
 	"/bin/dumb_farm.lua",
 	"/bin/wood_farmer.lua",
