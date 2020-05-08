@@ -14,8 +14,15 @@ VALUABLES = {
 for k,v in pairs(fuel.FUEL) do VALUABLES[k] = v end
 
 -- start bottom front left
-function quarry(width, depth, height, valuables)
+function quarry(width, depth, height, valuables, goDown)
+   print(width)
+   print(depth)
+   print(height)
+   print(valuables)
+   print(goDown)
+
    local valuables = valuables or false  -- default to false
+   local goDown = goDown or false  --default to up
    local facingForward = true
    nav.forceForward() -- start inside quarry zone
    for i = 1,height do
@@ -31,12 +38,12 @@ function quarry(width, depth, height, valuables)
 	    if facingForward then
 	       turtle.turnRight()
 	       manageInv(VALUABLES)
-	       nav.forceForward()
+	       nav.forceDir(nav.DIRS.FORWARD)
 	       turtle.turnRight()
 	    else
 	       turtle.turnLeft()
 	       manageInv(VALUABLES)
-	       nav.forceForward()
+	       nav.forceDir(nav.DIRS.FORWARD)
 	       turtle.turnLeft()
 	    end
 	    facingForward = not facingForward
@@ -46,7 +53,11 @@ function quarry(width, depth, height, valuables)
       -- but don't reposition after last pass
       if i ~= height then
 	 manageInv(VALUABLES)
-	 nav.forceUp()
+	 if goDown then
+	    nav.forceDir(nav.DIRS.DOWN)
+	 else
+	    nav.forceDir(nav.DIRS.UP)
+	 end
 	 turtle.turnLeft()
 	 turtle.turnLeft()
       end

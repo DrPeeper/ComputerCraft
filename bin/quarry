@@ -3,8 +3,14 @@ os.loadAPI("/lib/dig.lua")
 args = {...}
 
 if next(args) == nil or args[1] == "-h" or args[1] == "--help" then
-   print("Usage: quarry [WIDTH] [DEPTH] [HEIGHT] [VALUABLES]")
+   print("Usage: quarry [WIDTH] [DEPTH] [HEIGHT] {VALUABLES} {GODOWN}")
    return
 end 
 
-dig.quarry(args[1], args[2], args[3], args[4])
+print(args[1])
+print(args[2])
+print(args[3])
+print(args[4])
+print(args[5])
+
+dig.quarry(args[1], args[2], args[3], args[4], args[5])
