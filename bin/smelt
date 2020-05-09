@@ -1,0 +1,114 @@
+os.loadAPI("/lib/inv.lua")
+os.loadAPI("/lib/fuel.lua")
+
+print("Smelting...")
+
+-- NOTE: inv slot 1 is reserved for turtle fuel
+NUM_FURNACES = 8
+CHARCOAL = "minecraft:charcoal"
+
+-- gather inventory information
+local turtle_fuel = turtle.getItemDetail(1)
+if not turtle_fuel or not fuel.FUEL[turtle_fuel.name] then
+   error("place fuel in slot 1, then try again")
+end
+fuel.refuel()
+
+-- calculate total reagents
+local num_reagents = 0
+local total_fuel = 0  -- in # of blocks smelted
+for i = 2,16 do
+   item = turtle.getItemDetail(i)
+   if item and fuel.FUEL[item.name] then
+      total_fuel = total_fuel + item.count * math.floor(fuel.FUEL[item.name] / 10)
+   elseif item then
+      num_reagents = num_reagents + item.count
+   end
+end
+
+local limiting_factor = math.min(num_reagents, total_fuel)
+local per_furnace = math.floor(limiting_factor / NUM_FURNACES)
+
+-- create a table of reagents to smelt
+local reagents = {}
+for i = 2,16 do
+   item = turtle.getItemDetail(i)
+   if item and not fuel.FUEL[item.name] then
+      reagents[item.name] = true
+   end
+end
+
+-- place items in furnaces
+for i = 1,NUM_FURNACES do
+   if i ~= 1 then
+      fuel.refuel()
+      turtle.forward()
+   end
+   
+   -- Deposit coal and reagents
+   -- TODO: support more fuel types
+   inv.depositSome(reagents, per_furnace, true)
+end
+
+-- reposition to under furnaces
+turtle.turnLeft()
+turtle.forward()
+turtle.down()
+turtle.down()
+turtle.back()
+turtle.turnLeft()
+
+-- place fuel in furnaces
+for i = 1,NUM_FURNACES do
+   if i ~= 1 then
+      fuel.refuel()
+      turtle.forward()
+   end
+   
+   -- Deposit coal and reagents
+   -- TODO: support more fuel types
+   inv.depositSome({[CHARCOAL]=true}, math.ceil(per_furnace / 8), false)
+end
+
+-- wait for everything to smelt
+print(string.format("Waiting %d seconds...", 10 * per_furnace))
+os.sleep(10 * per_furnace)
+print("Collecting smelted items...")
+
+turtle.turnLeft()
+turtle.turnLeft()
+
+-- collect smelted items
+for i = 1,NUM_FURNACES do
+   if i ~= 1 then
+      fuel.refuel()
+      turtle.forward()
+   end
+   
+   while turtle.suckUp() do end
+end
+
+-- reposition to over furnaces
+turtle.turnLeft()
+turtle.forward()
+turtle.up()
+turtle.up()
+turtle.back()
+turtle.turnLeft()
+
+-- return home/ collect excess fuel
+for i = 1,NUM_FURNACES do
+   if i ~= 1 then
+      fuel.refuel()
+      turtle.forward()
+   end
+   
+   while turtle.suckDown() do end
+end
+
+turtle.turnLeft()
+turtle.turnLeft()
+
+inv.restack()
+
+print("Smelting completed :)")

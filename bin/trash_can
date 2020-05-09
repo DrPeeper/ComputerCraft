@@ -1,0 +1,7 @@
+os.loadAPI("/lib/inv.lua")
+
+while true do
+   local event, param1 = os.pullEvent("turtle_inventory")
+   print("Know your place trash!")
+   inv.dropAllExcept({})
+end
