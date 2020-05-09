@@ -54,6 +54,18 @@ mvInputs = {
 	},
 }
 
+north = {0,1,0}
+west = {-1,0,0}
+south = {0,-1,0}
+east = {1,0,0}
+
+cardinalCoordinates = {
+	[north] = "north",
+	[west] = "west",
+	[south] = "south",
+	[east] = "east",
+}
+
 -- initialize starting position
 -- DoNt FoRgEt
 function init()
@@ -148,6 +160,15 @@ function turnTo(destDir)
 
 	end
 end
+
+-- move to the given coordinates destination
+-- can only be one value (1 or -1) on one axis
+function move(dest)
+	tmp = {0,0,0}
+	for i,v in ipairs(dest) do
+		tmp[] = v * -1
+	end
+	if cardinalCoordinates[direction] == tmp 
 
 -- move forward n blocks
 function forceForward(n)

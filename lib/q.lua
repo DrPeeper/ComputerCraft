@@ -1,4 +1,4 @@
-function q()
+function queue()
 	local queue = { 
 			["top"] = 0,
 			["bottom"] = 1,
