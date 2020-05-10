@@ -235,6 +235,10 @@ end
 
 -- attempt to travel to given coordinates
 function goTo(dest, prevA, prevD)
+	-- default garbage values
+	prevA = prevA or 6
+	prevD = prevD or 10
+
 	-- base case
 	if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
 		return true
