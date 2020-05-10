@@ -32,7 +32,7 @@ ACTIONS = {
 cardinals = {"east","north","west","south"}
 
 -- instantiate current position
-function init(position, axis, direction)
+function init()
 	position = {0,0,0}
 	axis = 1
 	direction = 1
@@ -43,7 +43,7 @@ function getAxis()
 end
 
 function getPosition()
-	return position()
+	return position
 end
 
 function getDirection()
@@ -71,6 +71,7 @@ function turnLeft()
 	array = {1, -1}
 	if turtle.turnLeft() then
 		direction = direction * -1 * array[1 + axis % 2]
+		axis = 1 + axis % 2
 		return true
 	end
 	return false
@@ -80,6 +81,7 @@ function turnRight()
 	array = {1, -1}
 	if turtle.turnRight() then
 		direction = direction * 1 * array[1 + axis % 2]
+		axis = 1 + axis % 2
 		return true
 	end
 	return false
