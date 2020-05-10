@@ -262,17 +262,7 @@ function goTo(dest, prevA, prevD)
 	-- attempt to move in optimal direction
 	prevA, prevD = moveE(key)
 	if not prevA or not prevD then
-		-- calculate the inverse of the k
-		for i,v in ipairs(key) do
-			if key[i] ~= 2 then
-				key[i] = key[i] * -1
-			end
-		end
-		-- attempt to move in unoptimal position
-		prevA, prevD = moveE(key)
-		if not prevA or not prevD then
-			return false
-		end
+		return false
 	end
 	-- make next move
 	if goTo(dest, prevA, prevD) then
