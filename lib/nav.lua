@@ -182,7 +182,7 @@ end
 -- will only move once in each axis
 function moveC(coordinates)
 	for i,v in ipairs(coordinates) do
-		moveTo(i,v / math.abs(v))
+		moveTo(i,v)
 	end
 end
 
