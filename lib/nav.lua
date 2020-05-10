@@ -98,6 +98,7 @@ function turnAround()
 end
 
 function forward()
+	fuel.refuel()
 	if turtle.forward() then
 		position[axis] = position[axis] + direction
 		return true
@@ -106,6 +107,7 @@ function forward()
 end
 
 function back()
+	fuel.refuel()
 	if turtle.back() then
 		position[axis] = position[axis] - direction
 		return true
@@ -114,6 +116,7 @@ function back()
 end
 
 function up()
+	fuel.refuel()
 	if turtle.up() then
 		position[3] = position[3] + 1
 		return true
@@ -122,6 +125,7 @@ function up()
 end
 
 function down()
+	fuel.refuel()
 	if turtle.down() then
 		position[3] = position[3] - 1
 		return true
@@ -135,16 +139,22 @@ end
 -- 1 = turn right
 -- 2 = turn around
 function turn(opcode)
-	function doNothing()
-		return true
+	if opcode > -2 and opcode < 3 then
+		function doNothing()
+			return true
+		end
+		array = {turnLeft, doNothing, turnRight, turnAround}
+		return array[opcode + 2]()
 	end
-	array = {turnLeft, doNothing, turnRight, turnAround}
-	return array[opcode + 2]()
+	error("invalid opcode")
 end
 
 -- given the axis and direction of destination, turn there
 function turnTo(axisD, directionD)
-	return turn(((axis - axisD) + (directionD - direction) + 1) % 4 - 1)
+	if cardinals[toCardinal(axisD, directionD)] then
+		return turn(((axis - axisD) + (directionD - direction) + 1) % 4 - 1)
+	end
+	error ("invalid axis and or direction")
 end
 
 -- given the opcode turn there and move forward
@@ -161,18 +171,18 @@ function move(opcode)
 			return false
 		end
 	end
-	array = {turnLeft, forward, turnRight, back}
-	return wrapper(array[opcode + 2])
+	if opcode > -2 and opcode < 3 then
+		array = {turnLeft, forward, turnRight, back}
+		return wrapper(array[opcode + 2])
+	end
+	error("invalid axis and or direction")
 end
 
 -- given the axis and direction of destination, turn forward there
 -- if axis is 3, will go up or down
 function moveTo(axisD, directionD)
 	if axisD ~= 3 then
-		if directionD ~= 0 then
-			return move(((axis - axisD) + (directionD - direction) + 1) % 4 - 1)
-		end
-		return true
+		return move(((axis - axisD) + (directionD - direction) + 1) % 4 - 1)
 	end
 	if directionD == 1 then
 		return up()
@@ -181,10 +191,99 @@ function moveTo(axisD, directionD)
 end
 
 -- move to the given coordinates
--- will only move once in each axis
+-- will only move once in a single axis
 function moveC(coordinates)
 	for i,v in ipairs(coordinates) do
-		moveTo(i,v)
+		if v ~= 0 and v ~= 2 then
+			return moveTo(i,v)
+		end
+	end
+	return false
+end
+
+-- move efficient
+-- given a key with 3 directions for 3 axis
+-- attempt to move in given direction
+-- zeroes in the key assume a don't care and 
+-- move efficient will try to move in both directions
+-- on the specified axis if the non zero axis fail
+-- if you don't want to move on a axis, put 2
+function moveE(coordinates)
+	-- attempt to move optimally
+	for i,v in ipairs(coordinates) do
+		if v ~= 0 and v ~= 2 then
+			-- if the axis has valid coordinates move there
+			if moveTo(i,v) then
+				return i,v
+			end
+		end
+	end
+	-- attempt to move nuetrally
+	for i,v in ipairs(coordinates) do
+		if v == 0 then
+			if moveTo(i,1) then
+				return i,1
+			end
+			if moveTo(i,-1) then
+				return i,-1
+			end
+		end
+	end
+	-- fail to move
+	return nil, nil
+end
+
+-- attempt to travel to given coordinates
+function goTo(dest, prevA, prevD)
+	-- base case
+	if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
+		return true
+	end
+	-- copy previous position in case we need to return
+	prev = {0,0,0}
+	for i,v in ipars(position) do
+		prev[i] = v
+	end
+	key = {0,0,0}
+	-- create key for next moveE
+	for i,v in ipairs(dest) do
+		if key[i] ~= 0 then
+			key[i] = key[i]/math.abs(key[i])
+		end
+		if key[prevA] = prevD * -1 then -- cannot go back
+			key[prevA] = 2
+		end
+	end
+	-- attempt to move in optimal direction
+	prevA, prevD = moveE(key)
+	if not prevA or not prevD then
+		-- calculate the inverse of the k
+		for i,v in ipairs(key) do
+			if key[i] ~= 2 then
+				key[i] = key[i] * -1
+			end
+		end
+		-- attempt to move in unoptimal position
+		prev A, prevD = moveE(key)
+		if prevA or not prevD then
+			return false
+		end
+	end
+	-- make next move
+	if goTo(dest, prevA, prevD) then
+		return true
+	else
+		-- calculate previous move
+		for i,v in ipairs(position) do
+			prev[i] = position[i] - prev[i]
+		end
+		-- attempt backtrack
+		if not moveC(prev) then
+			-- TODO: add force move
+			-- TODO: add turnC
+			error("cannot backtrack")
+		end
+		return false
 	end
 end
 
