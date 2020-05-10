@@ -236,8 +236,8 @@ end
 -- attempt to travel to given coordinates
 function goTo(dest, prevA, prevD)
 	-- default garbage values
-	prevA = prevA or 6
-	prevD = prevD or 10
+	prevA = prevA or 2 -- junk values for first run
+	prevD = prevD or 2 
 
 	-- base case
 	if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
@@ -252,7 +252,7 @@ function goTo(dest, prevA, prevD)
 	-- create key for next moveE
 	for i,v in ipairs(dest) do
 		if dest[i] ~= 0 then
-			key[i] = key[i]/math.abs(key[i])
+			key[i] = dest[i]/math.abs(dest[i])
 		end
 		-- cannot go back
 		if key[prevA] == prevD * -1 then
