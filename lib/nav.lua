@@ -144,7 +144,7 @@ end
 
 -- given the axis and direction of destination, turn there
 function turnTo(axisD, directionD)
-	return turn(((axis - axisD) + (directionD - direction)) % 4 - 1)
+	return turn(((axis - axisD) + (directionD - direction) + 1) % 4 - 1)
 end
 
 -- given the opcode turn there and move forward
@@ -169,7 +169,7 @@ end
 -- if axis is 3, will go up or down
 function moveTo(axisD, directionD)
 	if axisD ~= 3 then
-		return move(((axis - axisD) + (directionD - direction)) % 4 - 1)
+		return move(((axis - axisD) + (directionD - direction) + 1) % 4 - 1)
 	end
 	if directionD == 1 then
 		return up()
