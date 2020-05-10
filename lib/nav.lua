@@ -169,7 +169,9 @@ end
 -- if axis is 3, will go up or down
 function moveTo(axisD, directionD)
 	if axisD ~= 3 then
-		return move(((axis - axisD) + (directionD - direction) + 1) % 4 - 1)
+		if directionD ~= 0 then
+			return move(((axis - axisD) + (directionD - direction) + 1) % 4 - 1)
+		return true
 	end
 	if directionD == 1 then
 		return up()
