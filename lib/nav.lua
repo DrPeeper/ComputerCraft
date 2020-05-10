@@ -24,6 +24,149 @@ ACTIONS = {
    },
 }
 
+-- current position
+position
+axis
+direction
+
+
+-- cardinal, axis, direction
+-- east, 1, 1
+-- north, 2, 1
+-- west, 1, -1
+-- south, 2, -1
+cardinals = {"east","north","west","south"}
+
+-- instantiate current position
+function init(position, axis, direction)
+	position = position or {0,0,0} -- default to 0,0,0
+	axis = axis or 1 -- default y axis
+	direction =  direction or 1 -- default forward
+end
+
+-- return the axis and direction of if given the index of a cardinal direction
+function toDir(cardinal)
+	if cardinals[cardinal] then
+		axis = 2 - cardinal % 2
+		direction = 1 + axis - cardinal
+		return axis,direction
+	end
+	error("enter valid cardinal direction")
+end
+
+-- given an axis and direction return the index of the respective cardinal direction index
+function toCardinal(axis,direction)
+	return 1 + axis - direction
+end
+
+-- turn the turtle left
+-- if sucessfull return so and update direction, axis
+function turnLeft()
+	array = {1, -1}
+	if turtle.turnLeft() then
+		direction = direction * -1 * array[1 + axis % 2]
+		return true
+	end
+	return false
+end
+
+function turnRight()
+	array = {1, -1}
+	if turtle.turnRight() then
+		direction = direction * 1 * array[1 + axis % 2]
+		return true
+	end
+	return false
+end
+
+function turnAround()
+	if turnLeft() then
+		if not turnLeft() then
+			return turnRight() and turnRight() and turnRight()
+		end
+		return true
+	end
+	return turnRight() and turnRight()
+end
+
+function forward()
+	if turtle.forward() then
+		position[axis] = position[axis] + direction
+		return true
+	end
+	return false
+end
+
+function back()
+	if turtle.back() then
+		position[axis] = position[axis] - direction
+		return true
+	end
+	return false
+end
+
+function up()
+	if turtle.up() then
+		position[3] = position[3] + 1
+		return true
+	end
+	return false
+end
+
+function down()
+	if turtle.down() then
+		position[3] = position[3] - 1
+		return true
+	end
+	return false
+end
+
+-- turn given the opcode
+-- -1 = turn left
+-- 0 = do nothing
+-- 1 = turn right
+-- 2 = turn around
+function turn(opcode)
+	function doNothing()
+		return true
+	end
+	array = {turnLeft, doNothing, turnRight, turnAround}
+	return array[opcode + 2]()
+end
+
+-- given the axis and direction of destination, turn there
+function turnTo(axisD, directionD)
+	return turn(((axis - axisD) + (directionD - direction)) % 4 - 1)
+end
+
+-- given the opcode turn there and move forward
+-- if given the opcode for turn around return turtle.back()
+function move(opcode)
+	array = {turnLeft, forward, turnRight, back}
+	return array[opcode + 2]()
+end
+
+-- given the axis and direction of destination, turn forward there
+-- if axis is 3, will go up or down
+function moveTo(axisD, directionD)
+	if axisD ~= 3 then
+		return move((axis - axisD) + (directionD - direction)) % 4 - 1
+	end
+	if directionD == 1 then
+		return up()
+	else
+		return down()
+	end
+end
+
+-- move to the given coordinates
+-- will only move once in each axis
+function moveC(coordinates)
+	for i,v in ipairs(coordinates) do
+		moveTo(i,v / math.abs(v))
+	end
+end
+
 -- destructively more n blocks
 function forceDir(dir, n)
    if DIRS[dir] == nil then
