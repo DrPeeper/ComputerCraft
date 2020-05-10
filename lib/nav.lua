@@ -24,11 +24,6 @@ ACTIONS = {
    },
 }
 
--- position and direction
-position = {0,0,0}
-direction = 1
-axis = 1
-
 -- cardinal, axis, direction
 -- east, 1, 1
 -- north, 2, 1
@@ -38,9 +33,21 @@ cardinals = {"east","north","west","south"}
 
 -- instantiate current position
 function init(position, axis, direction)
-	position = position or {0,0,0} -- default to 0,0,0
-	axis = axis or 1 -- default y axis
-	direction =  direction or 1 -- default forward
+	position = {0,0,0}
+	axis = 1
+	direction = 1
+end
+
+function getAxis()
+	return axis
+end
+
+function getPosition()
+	return position()
+end
+
+function getDirection()
+	return direction
 end
 
 -- return the axis and direction of if given the index of a cardinal direction
