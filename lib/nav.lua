@@ -24,6 +24,11 @@ ACTIONS = {
    },
 }
 
+-- position and direction
+position = {0,0,0}
+direction = 1
+axis = 1
+
 -- cardinal, axis, direction
 -- east, 1, 1
 -- north, 2, 1
