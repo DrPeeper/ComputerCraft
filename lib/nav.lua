@@ -250,7 +250,8 @@ function goTo(dest, prevA, prevD)
 		if key[i] ~= 0 then
 			key[i] = key[i]/math.abs(key[i])
 		end
-		if key[prevA] = prevD * -1 then -- cannot go back
+		-- cannot go back
+		if key[prevA] == prevD * -1 then
 			key[prevA] = 2
 		end
 	end
