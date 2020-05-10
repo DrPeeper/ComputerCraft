@@ -241,7 +241,7 @@ function goTo(dest, prevA, prevD)
 	end
 	-- copy previous position in case we need to return
 	prev = {0,0,0}
-	for i,v in ipars(position) do
+	for i,v in ipairs(position) do
 		prev[i] = v
 	end
 	key = {0,0,0}
