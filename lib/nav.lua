@@ -171,6 +171,7 @@ function moveTo(axisD, directionD)
 	if axisD ~= 3 then
 		if directionD ~= 0 then
 			return move(((axis - axisD) + (directionD - direction) + 1) % 4 - 1)
+		end
 		return true
 	end
 	if directionD == 1 then
