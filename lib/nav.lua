@@ -265,8 +265,8 @@ function goTo(dest, prevA, prevD)
 			end
 		end
 		-- attempt to move in unoptimal position
-		prev A, prevD = moveE(key)
-		if prevA or not prevD then
+		prevA, prevD = moveE(key)
+		if not prevA or not prevD then
 			return false
 		end
 	end
