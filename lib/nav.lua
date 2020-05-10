@@ -251,7 +251,7 @@ function goTo(dest, prevA, prevD)
 	key = {0,0,0}
 	-- create key for next moveE
 	for i,v in ipairs(dest) do
-		if key[i] ~= 0 then
+		if dest[i] ~= 0 then
 			key[i] = key[i]/math.abs(key[i])
 		end
 		-- cannot go back
