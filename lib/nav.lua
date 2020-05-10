@@ -24,12 +24,6 @@ ACTIONS = {
    },
 }
 
--- current position
-position
-axis
-direction
-
-
 -- cardinal, axis, direction
 -- east, 1, 1
 -- north, 2, 1
@@ -150,7 +144,7 @@ end
 -- if axis is 3, will go up or down
 function moveTo(axisD, directionD)
 	if axisD ~= 3 then
-		return move((axis - axisD) + (directionD - direction)) % 4 - 1
+		return move(((axis - axisD) + (directionD - direction)) % 4 - 1)
 	end
 	if directionD == 1 then
 		return up()
