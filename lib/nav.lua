@@ -34,7 +34,7 @@ cardinals = {"east","north","west","south"}
 -- instantiate current position
 function init()
 	position = {0,0,0}
-	axis = 1
+	axis = 2
 	direction = 1
 end
 
@@ -176,9 +176,8 @@ function moveTo(axisD, directionD)
 	end
 	if directionD == 1 then
 		return up()
-	else
-		return down()
 	end
+		return down()
 end
 
 -- move to the given coordinates
