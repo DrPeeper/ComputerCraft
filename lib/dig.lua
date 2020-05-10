@@ -15,12 +15,6 @@ for k,v in pairs(fuel.FUEL) do VALUABLES[k] = v end
 
 -- start bottom front left
 function quarry(width, depth, height, valuables, goDown)
-   print(width)
-   print(depth)
-   print(height)
-   print(valuables)
-   print(goDown)
-
    local valuables = valuables or false  -- default to false
    local goDown = goDown or false  --default to up
    local facingForward = true
