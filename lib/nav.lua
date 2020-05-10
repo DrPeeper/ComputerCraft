@@ -141,8 +141,19 @@ end
 -- given the opcode turn there and move forward
 -- if given the opcode for turn around return turtle.back()
 function move(opcode)
+	function wrapper(cmd)
+		tmp = axis -- to check if turn
+		if cmd() then
+			if tmp ~= axis then
+				return forward()
+			end
+			return true
+		else
+			return false
+		end
+	end
 	array = {turnLeft, forward, turnRight, back}
-	return array[opcode + 2]()
+	return wrapper(array[opcode + 2])
 end
 
 -- given the axis and direction of destination, turn forward there
