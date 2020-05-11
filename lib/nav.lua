@@ -233,11 +233,6 @@ function moveE(coordinates)
 	return false
 end
 
-function goTo(dest)
-	prev = {}
-	return GoTo(dest)
-end
-
 -- attempt to travel to given coordinates
 function GoTo(dest)
 	-- base case
@@ -309,6 +304,11 @@ function GoTo(dest)
 		end
 	end
 	return false
+end
+
+function goTo(dest)
+	prev = {}
+	return GoTo(dest)
 end
 
 -- destructively more n blocks
