@@ -233,59 +233,77 @@ function moveE(coordinates)
 	return false
 end
 
--- attempt to travel to given coordinates
 function goTo(dest)
+	prev = {}
+	return GoTo(dest)
+end
+
+-- attempt to travel to given coordinates
+function GoTo(dest)
 	-- base case
 	if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
 		return true
 	end
-	-- copy previous position in case we need to return
-	prev = {0,0,0}
-	for i,v in ipairs(position) do
-		prev[i] = v
-	end
+	-- save destination as to not return here
+	prev[table.concat(position)] = #prev
+
+	-- create key for next move
 	key = {0,0,0}
-	-- create key for next moveE
 	for i,v in ipairs(dest) do
 		if dest[i] ~= 0 then
 			key[i] = dest[i]/math.abs(dest[i])
 		end
-		-- cannot go back
-		-- introduce prev table
 	end
 	-- attempt to move in optimal direction
 	for i,v in ipairs(key) do
-		if key[i] ~= 0 and key[i] ~= 2 then
-			if moveTo(i,v) then
-				if goTo(dest) then
-					return true
-				end
-				-- go back
-				if not moveTo(i, -v) then
-					error("cannot backtrack")
+		if key[i] ~= 0 then
+			-- check if next move leads to a visited destination
+			position[i] = position[i] + v
+			check = prev[table.concat(position)]
+			position[i] = position[i] - v
+			if not check then
+				if moveTo(i,v) then
+					if goTo(dest) then
+						return true
+					end
+					-- go back
+					if not moveTo(i, -v) then
+						error("cannot backtrack")
+					end
 				end
 			end
 		end
 	end
-
 	-- attempt to move in nuetral direction	
 	for i,v in ipairs(key) do
 		if key[i] == 0 then
-			if moveTo(i,1) then
-				if goTo(dest) then
-					return true
-				end
-				-- go back
-				if not moveTo(i, -1) then
-					error("cannot backtrack")
+			-- check if next move leads to a visited destination
+			position[i] = position[i] + i
+			check = prev[table.concat(position)]
+			position[i] = position[i] - v
+			if not check then
+				if moveTo(i,1) then
+					if goTo(dest) then
+						return true
+					end
+					-- go back
+					if not moveTo(i, -1) then
+						error("cannot backtrack")
+					end
 				end
 			end
-			if moveTo(i,-1) then
-				if goTo(dest) then
-					return true
-				end
-				if not moveTo(i, 1) then
-					error("cannot backtrack")
+			-- check if next move leads to a visited destination
+			position[i] = position[i] + v
+			check = prev[table.concat(position)]
+			position[i] = position[i] - v
+			if not check then
+				if moveTo(i,-1) then
+					if goTo(dest) then
+						return true
+					end
+					if not moveTo(i, 1) then
+						error("cannot backtrack")
+					end
 				end
 			end
 		end
