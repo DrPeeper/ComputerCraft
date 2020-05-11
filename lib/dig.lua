@@ -18,12 +18,12 @@ function quarry(width, depth, height, valuables, goDown)
    local valuables = valuables or false  -- default to false
    local goDown = goDown or false  --default to up
    local facingForward = true
-   nav.forceForward() -- start inside quarry zone
+   nav.forceDir(nav.DIRS.FORWARD) -- start inside quarry zone
    for i = 1,height do
       for j = 1,width do
 	 for k = 1,depth-1 do
 	    manageInv(VALUABLES)
-	    nav.forceForward()
+	    nav.forceDir(nav.DIRS.FORWARD)
 	 end
 	 -- Just finished digging one row.
 	 -- Now, reposition to dig next row,
