@@ -74,7 +74,7 @@ function getBearing()
       turtle.turnRight()
    end
 
-   if delta_pos.length() == 0 then
+   if delta_pos:length() == 0 then
       error("failed to get bearing")
    end
 
