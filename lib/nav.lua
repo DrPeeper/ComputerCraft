@@ -233,6 +233,11 @@ function moveE(coordinates)
 	return false
 end
 
+function goTo(dest)
+	prev = {}
+	return GoTo(dest)
+end
+
 -- attempt to travel to given coordinates
 function GoTo(dest)
 	-- base case
@@ -240,10 +245,10 @@ function GoTo(dest)
 		return true
 	end
 	-- save destination as to not return here
-	prev[table.concat(position)] = #prev
+	prev[table.concat(position)] = true
 
 	-- create key for next move
-	key = {0,0,0}
+	local key = {0,0,0}
 	for i,v in ipairs(dest) do
 		if dest[i] ~= 0 then
 			key[i] = dest[i]/math.abs(dest[i])
@@ -254,7 +259,7 @@ function GoTo(dest)
 		if key[i] ~= 0 then
 			-- check if next move leads to a visited destination
 			position[i] = position[i] + v
-			check = prev[table.concat(position)]
+			local check = prev[table.concat(position)]
 			position[i] = position[i] - v
 			if not check then
 				if moveTo(i,v) then
@@ -274,7 +279,7 @@ function GoTo(dest)
 		if key[i] == 0 then
 			-- check if next move leads to a visited destination
 			position[i] = position[i] + v
-			check = prev[table.concat(position)]
+			local check = prev[table.concat(position)]
 			position[i] = position[i] - v
 			if not check then
 				if moveTo(i,1) then
@@ -304,11 +309,6 @@ function GoTo(dest)
 		end
 	end
 	return false
-end
-
-function goTo(dest)
-	prev = {}
-	return GoTo(dest)
 end
 
 -- destructively more n blocks
