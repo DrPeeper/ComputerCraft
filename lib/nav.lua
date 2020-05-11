@@ -260,25 +260,40 @@ function goTo(dest, prevA, prevD)
 		end
 	end
 	-- attempt to move in optimal direction
-	prevA, prevD = moveE(key)
-	if not prevA or not prevD then
-		return false
+	for i,v in ipairs(key) do
+		if key[i] ~= 0 and key[i] ~= 2 then
+			if moveTo(i,v) then
+				if goTo(dest, i, v) then
+					return true
+				end
+				-- go back
+				if not moveTo(i,-v) then
+					error("cannot backtrack")
+				end
+			end
+		end
 	end
-	-- make next move
-	if goTo(dest, prevA, prevD) then
-		return true
-	else
-		-- calculate previous move
-		for i,v in ipairs(position) do
-			prev[i] = position[i] - prev[i]
+	-- attempt to move in nuetral direction	
+	for i,v in ipairs(key) do
+		if key[i] == 0 then
+			if moveTo(i,1) then
+				if goTo(dest, i, v) then
+					return true
+				end
+				-- go back
+				if not moveTo(i,-v) then
+					error("cannot backtrack")
+				end
+			end
+			if moveTo(i,-1) then
+				if goTo(dest, i, v) then
+					return true
+				end
+				if not moveTo(i, -v) then
+					error("cannot backtrack")
+				end
+			end
 		end
-		-- attempt backtrack
-		if not moveC(prev) then
-			-- TODO: add force move
-			-- TODO: add turnC
-			error("cannot backtrack")
-		end
-		return false
 	end
 end
 
