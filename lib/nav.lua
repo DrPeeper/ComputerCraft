@@ -194,8 +194,8 @@ end
 -- will only move once in a single axis
 function moveC(coordinates)
 	for i,v in ipairs(coordinates) do
-		if v ~= 0 and v ~= 2 then
-			return moveTo(i,v)
+		if v ~= 0 then
+			return moveTo(i,v/math.abs(v))
 		end
 	end
 	return false
@@ -234,10 +234,7 @@ function moveE(coordinates)
 end
 
 -- attempt to travel to given coordinates
-function goTo(dest, prevA, prevD)
-	-- default garbage values
-	prevA = prevA or 2 -- junk values for first run
-	prevD = prevD or 2 
+function goTo(previous)
 
 	-- base case
 	if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
@@ -263,33 +260,32 @@ function goTo(dest, prevA, prevD)
 	for i,v in ipairs(key) do
 		if key[i] ~= 0 and key[i] ~= 2 then
 			if moveTo(i,v) then
-				if goTo(dest, i, v) then
-					return true
-				end
+				if goTo(dest) then
 				-- go back
-				if not moveTo(prev) then
+				if not moveTo(i, -v) then
 					error("cannot backtrack")
 				end
 			end
 		end
 	end
+
 	-- attempt to move in nuetral direction	
 	for i,v in ipairs(key) do
 		if key[i] == 0 then
 			if moveTo(i,1) then
-				if goTo(dest, i, v) then
+				if goTo(dest) then
 					return true
 				end
 				-- go back
-				if not moveTo(prev) then
+				if not moveTo(i, -1) then
 					error("cannot backtrack")
 				end
 			end
 			if moveTo(i,-1) then
-				if goTo(dest, i, v) then
+				if goTo(dest) then
 					return true
 				end
-				if not moveTo(i, -v) then
+				if not moveTo(i, 1) then
 					error("cannot backtrack")
 				end
 			end
