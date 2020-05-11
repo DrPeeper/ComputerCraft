@@ -234,8 +234,7 @@ function moveE(coordinates)
 end
 
 -- attempt to travel to given coordinates
-function goTo(previous)
-
+function goTo(dest)
 	-- base case
 	if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
 		return true
@@ -252,9 +251,7 @@ function goTo(previous)
 			key[i] = dest[i]/math.abs(dest[i])
 		end
 		-- cannot go back
-		if key[prevA] == prevD * -1 then
-			key[prevA] = 2
-		end
+		-- introduce prev table
 	end
 	-- attempt to move in optimal direction
 	for i,v in ipairs(key) do
