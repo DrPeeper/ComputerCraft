@@ -214,7 +214,7 @@ function moveE(coordinates)
 		if v ~= 0 and v ~= 2 then
 			-- if the axis has valid coordinates move there
 			if moveTo(i,v) then
-				return i,v
+				return true
 			end
 		end
 	end
@@ -222,15 +222,15 @@ function moveE(coordinates)
 	for i,v in ipairs(coordinates) do
 		if v == 0 then
 			if moveTo(i,1) then
-				return i,1
+				return true
 			end
 			if moveTo(i,-1) then
-				return i,-1
+				return true
 			end
 		end
 	end
 	-- fail to move
-	return nil, nil
+	return false
 end
 
 -- attempt to travel to given coordinates
@@ -261,6 +261,8 @@ function goTo(previous)
 		if key[i] ~= 0 and key[i] ~= 2 then
 			if moveTo(i,v) then
 				if goTo(dest) then
+					return true
+				end
 				-- go back
 				if not moveTo(i, -v) then
 					error("cannot backtrack")
