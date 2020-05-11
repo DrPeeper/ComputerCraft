@@ -267,7 +267,7 @@ function goTo(dest, prevA, prevD)
 					return true
 				end
 				-- go back
-				if not moveC(prev) then
+				if not moveTo(prev) then
 					error("cannot backtrack")
 				end
 			end
@@ -281,7 +281,7 @@ function goTo(dest, prevA, prevD)
 					return true
 				end
 				-- go back
-				if not moveC(prev) then
+				if not moveTo(prev) then
 					error("cannot backtrack")
 				end
 			end
@@ -295,6 +295,7 @@ function goTo(dest, prevA, prevD)
 			end
 		end
 	end
+	return false
 end
 
 -- destructively more n blocks
