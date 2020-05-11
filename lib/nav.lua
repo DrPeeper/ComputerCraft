@@ -306,6 +306,11 @@ function GoTo(dest)
 	return false
 end
 
+function goTo(dest)
+	prev = {}
+	return GoTo(dest)
+end
+
 -- destructively more n blocks
 function forceDir(dir, n)
    if DIRS[dir] == nil then
