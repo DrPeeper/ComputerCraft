@@ -273,7 +273,7 @@ function GoTo(dest)
 	for i,v in ipairs(key) do
 		if key[i] == 0 then
 			-- check if next move leads to a visited destination
-			position[i] = position[i] + i
+			position[i] = position[i] + v
 			check = prev[table.concat(position)]
 			position[i] = position[i] - v
 			if not check then
