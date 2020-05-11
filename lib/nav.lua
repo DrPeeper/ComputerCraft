@@ -258,7 +258,7 @@ function GoTo(dest)
 			position[i] = position[i] - v
 			if not check then
 				if moveTo(i,v) then
-					if goTo(dest) then
+					if GoTo(dest) then
 						return true
 					end
 					-- go back
@@ -278,7 +278,7 @@ function GoTo(dest)
 			position[i] = position[i] - v
 			if not check then
 				if moveTo(i,1) then
-					if goTo(dest) then
+					if GoTo(dest) then
 						return true
 					end
 					-- go back
@@ -293,7 +293,7 @@ function GoTo(dest)
 			position[i] = position[i] - v
 			if not check then
 				if moveTo(i,-1) then
-					if goTo(dest) then
+					if GoTo(dest) then
 						return true
 					end
 					if not moveTo(i, 1) then
