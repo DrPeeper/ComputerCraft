@@ -234,13 +234,17 @@ function moveE(coordinates)
 end
 
 function goTo(dest)
-	prev = {}	
+	local prev = {}	
 	-- attempt to travel to given coordinates
-	function GoTo(dest)
+	local function GoTo(dest, prev)
+
 		-- base case
 		if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
 			return true
 		end
+
+		prev = prev or {}
+
 		-- save destination as to not return here
 		prev[table.concat(position)] = true
 
@@ -260,7 +264,7 @@ function goTo(dest)
 				position[i] = position[i] - v
 				if not check then
 					if moveTo(i,v) then
-						if GoTo(dest) then
+						if GoTo(dest, prev) then
 							return true
 						end
 						-- go back
@@ -280,7 +284,7 @@ function goTo(dest)
 				position[i] = position[i] - v
 				if not check then
 					if moveTo(i,1) then
-						if GoTo(dest) then
+						if GoTo(dest, prev) then
 							return true
 						end
 						-- go back
@@ -295,7 +299,7 @@ function goTo(dest)
 				position[i] = position[i] - v
 				if not check then
 					if moveTo(i,-1) then
-						if GoTo(dest) then
+						if GoTo(dest, prev) then
 							return true
 						end
 						if not moveTo(i, 1) then
@@ -307,7 +311,7 @@ function goTo(dest)
 		end
 		return false
 	end
-	return GoTo(dest)
+	return GoTo(dest, prev)
 end
 
 -- destructively more n blocks
