@@ -201,13 +201,16 @@ function moveC(coordinates)
 	return false
 end
 
+function goTo(dest)
+	local record = {}
+	return GoTo(dest,record)
+end
+
 function GoTo(dest, prev)
 	-- base case
 	if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
 		return true
 	end
-
-	prev = prev or {}
 
 	-- save destination as to not return here
 	prev[table.concat(position)] = true
