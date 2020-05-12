@@ -201,117 +201,44 @@ function moveC(coordinates)
 	return false
 end
 
--- move efficient
--- given a key with 3 directions for 3 axis
--- attempt to move in given direction
--- zeroes in the key assume a don't care and 
--- move efficient will try to move in both directions
--- on the specified axis if the non zero axis fail
--- if you don't want to move on a axis, put 2
-function moveE(coordinates)
-	-- attempt to move optimally
-	for i,v in ipairs(coordinates) do
-		if v ~= 0 and v ~= 2 then
-			-- if the axis has valid coordinates move there
-			if moveTo(i,v) then
-				return true
-			end
+function GoTo(dest, prev)
+	-- base case
+	if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
+		return true
+	end
+
+	prev = prev or {}
+
+	-- save destination as to not return here
+	prev[table.concat(position)] = true
+
+	-- create key for next move
+	local key = {0,0,0}
+	for i,v in ipairs(dest) do
+		if dest[i] ~= 0 then
+			key[i] = dest[i]/math.abs(dest[i])
 		end
 	end
-	-- attempt to move nuetrally
-	for i,v in ipairs(coordinates) do
-		if v == 0 then
-			if moveTo(i,1) then
-				return true
-			end
-			if moveTo(i,-1) then
-				return true
-			end
-		end
-	end
-	-- fail to move
-	return false
-end
-
-function goTo(dest)
-	local prev = {}	
-	-- attempt to travel to given coordinates
-	local function GoTo(dest, prev)
-
-		-- base case
-		if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
-			return true
-		end
-
-		prev = prev or {}
-
-		-- save destination as to not return here
-		prev[table.concat(position)] = true
-
-		-- create key for next move
-		local key = {0,0,0}
-		for i,v in ipairs(dest) do
-			if dest[i] ~= 0 then
-				key[i] = dest[i]/math.abs(dest[i])
-			end
-		end
-		-- attempt to move in optimal direction
-		for i,v in ipairs(key) do
-			if key[i] ~= 0 then
-				-- check if next move leads to a visited destination
-				position[i] = position[i] + v
-				local check = prev[table.concat(position)]
-				position[i] = position[i] - v
-				if not check then
-					if moveTo(i,v) then
-						if GoTo(dest, prev) then
-							return true
-						end
-						-- go back
-						if not moveTo(i, -v) then
-							error("cannot backtrack")
-						end
+	-- attempt to move in optimal direction
+	for i,v in ipairs(key) do
+		if key[i] ~= 0 then
+			-- check if next move leads to a visited destination
+			position[i] = position[i] + v
+			local check = prev[table.concat(position)]
+			position[i] = position[i] - v
+			if not check then
+				if moveTo(i,v) then
+					if GoTo(dest, prev) then
+						return true
+					end
+					-- go back
+					if not moveTo(i, -v) then
+						error("cannot backtrack")
 					end
 				end
 			end
 		end
-		-- attempt to move in nuetral direction	
-		for i,v in ipairs(key) do
-			if key[i] == 0 then
-				-- check if next move leads to a visited destination
-				position[i] = position[i] + v
-				local check = prev[table.concat(position)]
-				position[i] = position[i] - v
-				if not check then
-					if moveTo(i,1) then
-						if GoTo(dest, prev) then
-							return true
-						end
-						-- go back
-						if not moveTo(i, -1) then
-							error("cannot backtrack")
-						end
-					end
-				end
-				-- check if next move leads to a visited destination
-				position[i] = position[i] + v
-				check = prev[table.concat(position)]
-				position[i] = position[i] - v
-				if not check then
-					if moveTo(i,-1) then
-						if GoTo(dest, prev) then
-							return true
-						end
-						if not moveTo(i, 1) then
-							error("cannot backtrack")
-						end
-					end
-				end
-			end
-		end
-		return false
 	end
-	return GoTo(dest, prev)
 end
 
 -- destructively more n blocks
