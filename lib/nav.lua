@@ -218,6 +218,7 @@ function GoTo(dest, prev)
 	-- create key for next move
 	local key = {0,0,0}
 	for i,v in ipairs(dest) do
+		key[i] = dest[i] - position[i]
 		if dest[i] ~= 0 then
 			key[i] = dest[i]/math.abs(dest[i])
 		end
@@ -230,6 +231,7 @@ function GoTo(dest, prev)
 			local check = prev[table.concat(position)]
 			position[i] = position[i] - v
 			if not check then
+				-- if move is successful go next
 				if moveTo(i,v) then
 					if GoTo(dest, prev) then
 						return true
