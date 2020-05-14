@@ -1,7 +1,7 @@
 function init(capacity)
 	capacity = capacity or 10
 	top = 0
-	bottom = capacity
+	bottom = capacity - 1
 	size = 0
 	queue = {}
 	-- size, capacity, rear, top
