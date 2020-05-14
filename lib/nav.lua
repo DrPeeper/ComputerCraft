@@ -1,5 +1,5 @@
 os.loadAPI("/lib/fuel.lua")
-os.loadAPI("/lib/nav.lua")
+os.loadAPI("/lib/q.lua")
 
 DIRS = {
    UP="UP",
@@ -244,7 +244,7 @@ function GoTo(dest, prev)
 
 	-- attempt to move in each direction in an optimal order
 	while not q.isEmpty(g) do
-		local move = q.pop()
+		local move = q.pop(g)
 		local i = move[1]
 		local v = move[2]
 

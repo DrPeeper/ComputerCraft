@@ -16,7 +16,7 @@ function isEmpty(q)
 	return false
 end
 
-function isFull()
+function isFull(q)
 	if q[4] == q[5] then -- if size is equal to capacity
 		return true
 	end
