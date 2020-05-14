@@ -34,7 +34,7 @@ end
 function pop(q)
 	if not isEmpty(q) then
 		tmp = q[VARS.QUEUE][q[VARS.TOP]] -- tmp equals the value at queue index top
-		q[VARS.TOP] = (1 + q[VARS.TOP] %) q[VARS.CAPACITY] -- top = top + 1 % capacity
+		q[VARS.TOP] = (1 + q[VARS.TOP]) % q[VARS.CAPACITY] -- top = top + 1 % capacity
 		q[VARS.SIZE] = q[VARS.SIZE] - 1 -- size = size - 1
 		return tmp
 	end
