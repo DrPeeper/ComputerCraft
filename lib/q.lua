@@ -34,7 +34,7 @@ end
 function pop(q)
 	if not isEmpty(q) then
 		tmp = q[VARS.QUEUE][q[VARS.TOP]] -- tmp equals the value at queue index top
-		q[VARS.TOP] = 1 + q[VARS.TOP] % q[VARS.CAPACITY] -- top = top + 1 % capacity
+		q[VARS.TOP] = (1 + q[VARS.TOP] %) q[VARS.CAPACITY] -- top = top + 1 % capacity
 		q[VARS.SIZE] = q[VARS.SIZE] - 1 -- size = size - 1
 		return tmp
 	end
@@ -43,7 +43,7 @@ end
 
 function enq(q, item)
 	if not isFull(q) then
-		q[VARS.BOTTOM] = 1 + q[VARS.BOTTOM] % q[VARS.CAPACITY] -- bottom = bottom + one % capacity
+		q[VARS.BOTTOM] = (1 + q[VARS.BOTTOM]) % q[VARS.CAPACITY] -- bottom = bottom + one % capacity
 		q[VARS.QUEUE][q[VARS.BOTTOM]] = item -- item is stored in queue at index botom
 		q[VARS.SIZE] = q[VARS.SIZE] + 1 -- size = size + 1
 		return true
