@@ -1,4 +1,5 @@
 os.loadAPI("/lib/fuel.lua")
+os.loadAPI("/lib/nav.lua")
 
 DIRS = {
    UP="UP",
@@ -68,7 +69,7 @@ end
 -- turn the turtle left
 -- if sucessfull return so and update direction, axis
 function turnLeft()
-	array = {1, -1}
+	local tmp = {1, -1}
 	if turtle.turnLeft() then
 		direction = direction * -1 * array[1 + axis % 2]
 		axis = 1 + axis % 2
@@ -78,7 +79,7 @@ function turnLeft()
 end
 
 function turnRight()
-	array = {1, -1}
+	local tmp = {1, -1}
 	if turtle.turnRight() then
 		direction = direction * 1 * array[1 + axis % 2]
 		axis = 1 + axis % 2
@@ -140,11 +141,11 @@ end
 -- 2 = turn around
 function turn(opcode)
 	if opcode > -2 and opcode < 3 then
-		function doNothing()
+		local function doNothing()
 			return true
 		end
-		array = {turnLeft, doNothing, turnRight, turnAround}
-		return array[opcode + 2]()
+		local actions  = {turnLeft, doNothing, turnRight, turnAround}
+		return actions[opcode + 2]()
 	end
 	error("invalid opcode")
 end
@@ -160,8 +161,8 @@ end
 -- given the opcode turn there and move forward
 -- if given the opcode for turn around return turtle.back()
 function move(opcode)
-	function wrapper(cmd)
-		tmp = axis -- to check if turn
+	local function wrapper(cmd)
+		local tmp = axis -- to check if turn
 		if cmd() then
 			if tmp ~= axis then
 				return forward()
@@ -172,8 +173,8 @@ function move(opcode)
 		end
 	end
 	if opcode > -2 and opcode < 3 then
-		array = {turnLeft, forward, turnRight, back}
-		return wrapper(array[opcode + 2])
+		local actions = {turnLeft, forward, turnRight, back}
+		return wrapper(actions[opcode + 2])
 	end
 	error("invalid axis and or direction")
 end
@@ -201,11 +202,13 @@ function moveC(coordinates)
 	return false
 end
 
+-- TODO attempt to go to these coordinates
 function goTo(dest)
 	local record = {}
 	return GoTo(dest,record)
 end
 
+-- TODO add breaks to avoid infinite search
 function GoTo(dest, prev)
 	-- base case
 	if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
@@ -214,36 +217,55 @@ function GoTo(dest, prev)
 
 	-- save destination as to not return here
 	prev[table.concat(position)] = true
+	-- queues sort moves into good, nuetral, and bad
+	local g = q.init()
+	local n = q.init()
+	local b = q.init()
 
 	-- create key for next move
-	local key = {0,0,0}
 	for i,v in ipairs(dest) do
-		key[i] = dest[i] - position[i]
-		if dest[i] ~= 0 then
-			key[i] = dest[i]/math.abs(dest[i])
+		local key = dest[i] - position[i]
+		if key ~= 0 then
+			key = key/math.abs(key)
+			q.enq(g,{i,key})
+			q.enq(b,{i,-key})
+		else
+			q.enq(n,{i,1})
+			q.enq(n,{i,-1})
 		end
 	end
-	-- attempt to move in optimal direction
-	for i,v in ipairs(key) do
-		if key[i] ~= 0 then
-			-- check if next move leads to a visited destination
-			position[i] = position[i] + v
-			local check = prev[table.concat(position)]
-			position[i] = position[i] - v
-			if not check then
-				-- if move is successful go next
-				if moveTo(i,v) then
-					if GoTo(dest, prev) then
-						return true
-					end
-					-- go back
-					if not moveTo(i, -v) then
-						error("cannot backtrack")
-					end
+
+	while not q.isEmpty(n) do
+		q.enq(g,q.pop(n))
+	end
+	while not q.isEmpty(b) do
+		q.enq(g,q.pop(b))
+	end
+
+	-- attempt to move in each direction in an optimal order
+	while not q.isEmpty(g) do
+		local move = q.pop()
+		local i = move[1]
+		local v = move[2]
+
+		-- check if next move leads to a visited destination
+		position[i] = position[i] + v
+		local check = prev[table.concat(position)]
+		position[i] = postion[i] - v
+		
+		if not check then
+			if moveTo(i, v) then
+				if GoTo(dest, prev) then
+					return true
+				end
+				if not moveTo(i, v) then
+					error("cannot backtrack")
 				end
 			end
 		end
 	end
+
+	return false	
 end
 
 -- destructively more n blocks
