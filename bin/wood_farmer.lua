@@ -1,9 +1,9 @@
 os.loadAPI("/lib/inv.lua")
 os.loadAPI("/lib/fuel.lua")
 
-LOG = "minecraft:%_log"
+LOG = "minecraft:%s_log"
 SAPLING = "minecraft:%s_sapling"
-LEAVES = "miencraft:%s_leaves"
+LEAVES = "minecraft:%s_leaves"
 SLEEP_TIME = 300
 CARRY = {
    [LOG] = true,
@@ -149,10 +149,10 @@ end
 -- read farm type from command line
 args = {...}
 
-local farm_type = args[0]
+local farm_type = args[1]
 
 if not farm_type then
-   farm_type == "oak"
+   farm_type = "oak"
 elseif not FARM_TYPES[farm_type] then
    print("please select a valid farm type")
    for k, _ in pairs(FARM_TYPES) do
