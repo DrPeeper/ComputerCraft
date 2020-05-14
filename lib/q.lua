@@ -1,3 +1,11 @@
+VARS = {
+	QUEUE = 1,
+	TOP = 2,
+	BOTTOM = 3,
+	SIZE = 4,
+	CAPACITY = 5
+}
+
 function init(capacity)
 	capacity = capacity or 10
 	top = 0
@@ -10,14 +18,14 @@ function init(capacity)
 end
 
 function isEmpty(q)
-	if q[4] == 0 then -- if size is equal to zero
+	if q[VARS.SIZE] == 0 then -- if size is equal to zero
 		return true
 	end
 	return false
 end
 
 function isFull(q)
-	if q[4] == q[5] then -- if size is equal to capacity
+	if q[VARS.SIZE] == q[VARS.CAPACITY] then -- if size is equal to capacity
 		return true
 	end
 	return false
@@ -25,9 +33,9 @@ end
 
 function pop(q)
 	if not isEmpty(q) then
-		tmp = q[1][q[2]] -- tmp equals the value at queue index top
-		q[2] = 1 + q[2] % q[5] -- top = top + 1 % capacity
-		q[4] = q[4] - 1 -- size = size - 1
+		tmp = q[VARS.QUEUE][VARS.TOP] -- tmp equals the value at queue index top
+		q[VARS.TOP] = 1 + q[VARS.TOP] % q[VARS.CAPACITY] -- top = top + 1 % capacity
+		q[VARS.SIZE] = q[VARS.SIZE] - 1 -- size = size - 1
 		return tmp
 	end
 	return nil
@@ -35,8 +43,10 @@ end
 
 function enq(q, item)
 	if not isFull(q) then
-		q[3] = 1 + q[3] % q[5] -- bottom = bottom + one % capacity
-		q[1][q[3]] = item -- item is stored in queue at index botom
-		q[4] = q[4] + 1 -- size = size + 1
+		q[VARS.BOTTOM] = 1 + q[VARS.BOTTOM] % q[VARS.CAPACITY] -- bottom = bottom + one % capacity
+		q[VARS.QUEUE][VARS.BOTTOM] = item -- item is stored in queue at index botom
+		q[VARS.SIZE] = q[VARS.SIZE] + 1 -- size = size + 1
+		return true
 	end
+	return false
 end
