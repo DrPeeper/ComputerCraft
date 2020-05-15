@@ -282,7 +282,7 @@ function GoToB(dest, prev)
 		
 		if not check then
 			if moveTo(i, v) then
-				if GoTo(dest, prev) then
+				if GoToB(dest, prev) then
 					return true
 				end
 				if not moveTo(i,-v) then
