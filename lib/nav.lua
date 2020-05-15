@@ -258,7 +258,7 @@ function GoTo(dest, prev)
 				if GoTo(dest, prev) then
 					return true
 				end
-				if not moveTo(i, v) then
+				if not moveTo(i,-v) then
 					error("cannot backtrack")
 				end
 			end
