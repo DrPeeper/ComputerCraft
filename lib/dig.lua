@@ -66,20 +66,20 @@ function manageInv(valuables)
       inv.dropAllExcept(VALUABLES)
       inv.restack()
    end
-
+end
 
 function vein()
-	local scans = {FORWARD, UP, DOWN, LEFT, LEFT, LEFT}
-	local digs = {FORWARD, UP, DOWN, FORWARD, FORWARD, FORWARD}
+	local scans = {scan.FORWARD, scan.UP, scan.DOWN, scan.LEFT, scan.LEFT, scan.LEFT}
+	local digs = {nav.FORWARD,nav.UP,nav.DOWN,nav.FORWARD, nav.FORWARD, nav.FORWARD}
 	local pos = {0,0,0}
 	for i,v in ipairs(move.position) do
 		pos[i] = v
 	end
 	for i,v in ipairs(scans) do
 		local success, item = scan.SCANS[v]()
-		if success and VALUABLES[time[name]] then
+		if success and VALUABLES[item[name]] then
 			nav.ACTIONS["DIG"][digs[i]]()
-			move.ACTIONS["MOVE"][digs[i]()
+			move.ACTIONS["MOVE"][digs[i]]()
 			vein()
 				
 		end
