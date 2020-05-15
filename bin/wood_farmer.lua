@@ -1,24 +1,36 @@
 os.loadAPI("/lib/inv.lua")
 os.loadAPI("/lib/fuel.lua")
 
-LOG = "minecraft:oak_log"
-SAPLING = "minecraft:oak_sapling"
+LOG = "minecraft:%s_log"
+SAPLING = "minecraft:%s_sapling"
+LEAVES = "minecraft:%s_leaves"
+SLEEP_TIME = 300
 CARRY = {
    [LOG] = true,
    [SAPLING] = true,
 }
-SLEEP_TIME = 300
-
 -- add any potential fuel source to VALUABLES
 for k,v in pairs(fuel.FUEL) do CARRY[k] = v end
+
+FARM_TYPES = {
+   ["oak"] = true,
+   ["spruce"] = true,
+   ["birch"] = true,
+}
 
 function nextTree()
    -- move to next tree
    turtle.turnRight()
    for i = 1,2 do
       fuel.refuel()
-      if not turtle.forward() then
-	 return false
+      while not turtle.forward() do
+	 -- handle leaves blocking the path
+	 local blocked, lookingAt = turtle.inspect()
+	 if blocked and lookingAt.name == LEAVES then
+	    turtle.dig()
+	 else
+	    return false
+	 end
       end
    end
    turtle.turnLeft()
@@ -50,9 +62,19 @@ function fellTree()
    end
 
    -- go back down
-   while turtle.down() do
-      fuel.refuel()
+   while true do
+      while turtle.down() do
+	 fuel.refuel()
+      end
+      -- handle leaves blocking the path
+      local blocked, lookingAt = turtle.inspectDown()
+      if blocked and lookingAt.name == LEAVES then
+	 turtle.digDown()
+      else
+	 break
+      end
    end
+   
 
    turtle.back()
 end
@@ -124,14 +146,36 @@ function dropOff()
 end
 
 
-print("Lumberjack protocol intializing...")
+-- read farm type from command line
+args = {...}
+
+local farm_type = args[1]
+
+if not farm_type then
+   farm_type = "oak"
+elseif not FARM_TYPES[farm_type] then
+   print("please select a valid farm type")
+   for k, _ in pairs(FARM_TYPES) do
+      print("- " .. k)
+   end
+   error()
+end
+
+-- set farm type
+LOG = string.format(LOG, farm_type)
+SAPLING = string.format(SAPLING, farm_type)
+LEAVES = string.format(LEAVES, farm_type)
+
+print("Wood farmer starting up")
 fuel.refuel()
 while true do
    local success, lookingAt = turtle.inspect()
    if success and lookingAt.name == LOG then
-      print("Harvesting")
+      print("Restocking...")
       restock()
+      print("Harvesting...")
       harvestPass()
+      print("Dropping off...")
       dropOff()
       print("Harvest completed. Sleeping.")
    end

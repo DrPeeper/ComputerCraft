@@ -7,10 +7,8 @@ if next(args) == nil or args[1] == "-h" or args[1] == "--help" then
    return
 end 
 
-print(args[1])
-print(args[2])
-print(args[3])
-print(args[4])
-print(args[5])
+width = tonumber(args[1])
+depth = tonumber(args[2])
+height = tonumber(args[3])
 
-dig.quarry(args[1], args[2], args[3], args[4], args[5])
+dig.quarry(width, depth, height, args[4], args[5])
