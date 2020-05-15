@@ -203,13 +203,40 @@ function moveC(coordinates)
 end
 
 -- TODO attempt to go to these coordinates
-function goTo(dest)
-	local record = {}
-	return GoTo(dest,record)
+function goTo(dest, back)
+	back = back or false
+	if back then
+		local record = {}
+		return GoToB(dest,record)
+	else
+		return GoTo(dest)
+	end
+end
+
+function GoTo(dest)
+	if dest[1] == postion[1] and dest[2] == position[2] and dest[3] == position[3] then
+		return true
+	end
+	local flag = false
+	for i,v in ipairs(dest) do
+		local diff = v - position[i]
+		if diff ~= 0 then 
+			local dir = diff/math.abs(diff)
+			while diff ~= 0 and move(i,dir) do
+				flag = true
+				diff = diff - dir
+			end
+		end
+	end
+	if flag then
+		return GoTo(dest)
+	else
+		return false
+	end		
 end
 
 -- TODO add breaks to avoid infinite search
-function GoTo(dest, prev)
+function GoToB(dest, prev)
 	-- base case
 	if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
 		return true
@@ -264,7 +291,6 @@ function GoTo(dest, prev)
 			end
 		end
 	end
-
 	return false	
 end
 
