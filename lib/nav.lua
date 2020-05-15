@@ -214,7 +214,7 @@ function goTo(dest, back)
 end
 
 function GoTo(dest)
-	if dest[1] == postion[1] and dest[2] == position[2] and dest[3] == position[3] then
+	if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
 		return true
 	end
 	local flag = false
