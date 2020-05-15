@@ -1,15 +1,46 @@
 os.loadAPI("lib/nav.lua")
 
-function scanUp()
+SCANS = {
+	UP = up,
+	DOWN = down,
+	FORWARD = forward,
+	LEFT = left,
+	RIGHT = right,
+	TO = to
+}
+
+DIRS = {
+	NORTH = {2,1},
+	SOUTH = {2,-2},
+	WEST = {1,-1},
+	EAST = {1,1}
+}
+
+function left()
+	if nav.left() then
+		return turtle.inspect()
+	end
+end
+
+function right()
+	if nav.right() then
+		return turtle.inspect()
+	end
+end
+
+function up()
 	return turtle.inspectUp()
 end
-function scan()
+
+function forward()
 	return turtle.inspect()
 end
-function scanDown()
+
+function down()
 	return turtle.inspectDown()
 end
-function scanTo(axis, direction)
+
+function to(axis, direction)
 	nav.turnTo(axis, direction)
 	return turtle.inspect()
 end
