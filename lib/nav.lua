@@ -222,7 +222,7 @@ function GoTo(dest)
 		local diff = v - position[i]
 		if diff ~= 0 then 
 			local dir = diff/math.abs(diff)
-			while diff ~= 0 and move(i,dir) do
+			while diff ~= 0 and moveTo(i,dir) do
 				flag = true
 				diff = diff - dir
 			end
