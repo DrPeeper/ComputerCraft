@@ -292,6 +292,7 @@ function GoToB(dest, prev)
 		end
 	end
 	return false	
+end
 
 -- wrapper for gps.locate
 -- returns results as a vector
