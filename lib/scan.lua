@@ -1,20 +1,14 @@
-os.loadAPI("lib/nav.lua")
+os.loadAPI("lib/move.lua")
 
-DIRS = {
-	NORTH = {2,1},
-	SOUTH = {2,-2},
-	WEST = {1,-1},
-	EAST = {1,1}
-}
 
 function left()
-	if nav.turnLeft() then
+	if move.turnLeft() then
 		return turtle.inspect()
 	end
 end
 
 function right()
-	if nav.turnRight() then
+	if move.turnRight() then
 		return turtle.inspect()
 	end
 end
@@ -32,7 +26,7 @@ function down()
 end
 
 function to(axis, direction)
-	nav.turnTo(axis, direction)
+	move.turnTo(axis, direction)
 	return turtle.inspect()
 end
 
@@ -43,6 +37,10 @@ SCANS = {
 	FORWARD = forward,
 	LEFT = left,
 	RIGHT = right,
-	TO = to
+	TO = to,
+	NORTH = to(2,1),
+	WEST = to(1,-1),
+	SOUTH = to(2,-1),
+	EAST = to(1,1)
 }
 
