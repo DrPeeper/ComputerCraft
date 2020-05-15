@@ -81,7 +81,7 @@ end
 function turnRight()
 	local tmp = {1, -1}
 	if turtle.turnRight() then
-		direction = direction * 1 * array[1 + axis % 2]
+		direction = direction * 1 * tmp[1 + axis % 2]
 		axis = 1 + axis % 2
 		return true
 	end
