@@ -8,13 +8,13 @@ DIRS = {
 }
 
 function left()
-	if nav.left() then
+	if nav.turnLeft() then
 		return turtle.inspect()
 	end
 end
 
 function right()
-	if nav.right() then
+	if nav.turnRight() then
 		return turtle.inspect()
 	end
 end
