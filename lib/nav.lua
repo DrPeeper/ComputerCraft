@@ -251,7 +251,7 @@ function GoTo(dest, prev)
 		-- check if next move leads to a visited destination
 		position[i] = position[i] + v
 		local check = prev[table.concat(position)]
-		position[i] = postion[i] - v
+		position[i] = position[i] - v
 		
 		if not check then
 			if moveTo(i, v) then
