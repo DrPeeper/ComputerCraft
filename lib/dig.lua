@@ -92,8 +92,8 @@ function vein()
 					tmp[i]()
 					fuel.refuel()
 				end
+				vein()
 			end
-			vein()
 		end
 		if not path.GoTo(pos, true) then
 			error("cannot backtrack")
