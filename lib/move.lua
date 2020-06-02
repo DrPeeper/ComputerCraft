@@ -30,8 +30,8 @@ end
 -- return the axis and direction of if given the index of a cardinal direction
 function toDir(cardinal)
 	if cardinals[cardinal] then
-		axis = 2 - cardinal % 2
-		direction = 1 + axis - cardinal
+		local axis = 2 - cardinal % 2
+		local direction = 1 + axis - cardinal
 		return axis,direction
 	end
 	error("enter valid cardinal direction")
