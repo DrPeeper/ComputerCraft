@@ -7,7 +7,9 @@ os.loadAPI("/lib/q.lua")
 -- west, 1, -1
 -- south, 2, -1
 cardinals = {"east","north","west","south"}
-
+local position = {0,0,0}
+local axis = 2
+local direction = 1
 -- instantiate current position
 function init()
 	position = {0,0,0}
