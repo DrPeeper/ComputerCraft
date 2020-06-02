@@ -2,7 +2,7 @@ os.loadAPI("/lib/inv.lua")
 os.loadAPI("/lib/fuel.lua")
 os.loadAPI("/lib/nav.lua")
 os.loadAPI("/lib/scan.lua")
-os.loadAPI("/lib/move.lua")
+os.loadAPI("/lib/path.lua")
 
 VALUABLES = {
    ["minecraft:iron_ore"] = true,
@@ -69,21 +69,21 @@ function manageInv(valuables)
 end
 
 function vein()
-	local scans = {scan.FORWARD, scan.UP, scan.DOWN, scan.LEFT, scan.LEFT, scan.LEFT}
-	local digs = {nav.FORWARD,nav.UP,nav.DOWN,nav.FORWARD, nav.FORWARD, nav.FORWARD}
+	local scans = {"FORWARD","UP", "DOWN", "LEFT", "LEFT", "LEFT"}
+	local digs = {"FORWARD","UP","DOWN","FORWARD","FORWARD","FORWARD"}
 	local pos = {0,0,0}
-	for i,v in ipairs(move.position) do
+	for i,v in ipairs(path.getPosition()) do
 		pos[i] = v
 	end
 	for i,v in ipairs(scans) do
 		local success, item = scan.SCANS[v]()
 		if success and VALUABLES[item[name]] then
-			nav.ACTIONS["DIG"][digs[i]]()
-			move.ACTIONS["MOVE"][digs[i]]()
+			path.ACTIONS["DIG"][digs[i]]()
+			path.ACTIONS["MOVE"][digs[i]]()
 			vein()
 				
 		end
-		if not move.GoTo(pos) then
+		if not path.GoTo(pos, true) then
 			error("cannot backtrack")
 		end
 	end
