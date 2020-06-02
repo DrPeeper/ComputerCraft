@@ -91,10 +91,9 @@ function vein()
 					tmp = {turtle.place, turtle.placeUp, turtle.placeDown, turtle.place, turtle.place, turtle.place}
 					tmp[i]()
 					fuel.refuel()
-				end				 
+				end
 			end
-					
-			vein()	
+			vein()
 		end
 		if not path.GoTo(pos, true) then
 			error("cannot backtrack")
