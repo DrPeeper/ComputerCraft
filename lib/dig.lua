@@ -5,7 +5,6 @@ os.loadAPI("/lib/scan.lua")
 os.loadAPI("/lib/path.lua")
 
 VALUABLES = {
-
    ["minecraft:redstone_ore"] = true,
    ["minecraft:redstone"] = true,
    ["minecraft:coal_ore"] = true,
@@ -81,11 +80,21 @@ function vein()
 	end
 	for i,v in ipairs(scans) do
 		local success, item = scan.SCANS[v]()
-		if success and VALUABLES[item[name]] then
-			path.ACTIONS["DIG"][digs[i]]()
-			path.ACTIONS["MOVE"][digs[i]]()
-			vein()
-				
+		if success then
+			if  VALUABLES[item.name] then
+				path.ACTIONS["DIG"][digs[i]]()
+				path.ACTIONS["MOVE"][digs[i]]()
+				vein()
+			end
+			if item.name == "minecraft:lava" then
+				if selectByName("minecraft:bucket") then
+					tmp = {turtle.place, turtle.placeUp, turtle.placeDown, turtle.place, turtle.place, turtle.place}
+					tmp[i]()
+					fuel.refuel()
+				end				 
+			end
+					
+			vein()	
 		end
 		if not path.GoTo(pos, true) then
 			error("cannot backtrack")
