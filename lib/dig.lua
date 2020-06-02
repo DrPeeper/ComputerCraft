@@ -96,9 +96,9 @@ function vein()
 				vein()
 			end
 		end
-		if not path.GoTo(pos, true) then
-			error("cannot backtrack")
-		end
+	end
+	if not path.GoTo(pos, true) then
+		error("cannot backtrack")
 	end
 end
 
