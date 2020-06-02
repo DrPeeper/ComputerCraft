@@ -87,7 +87,7 @@ function vein()
 				vein()
 			end
 			if item.name == "minecraft:lava" then
-				if selectByName("minecraft:bucket") then
+				if inv.selectByName("minecraft:bucket") then
 					tmp = {turtle.place, turtle.placeUp, turtle.placeDown, turtle.place, turtle.place, turtle.place}
 					tmp[i]()
 					fuel.refuel()
