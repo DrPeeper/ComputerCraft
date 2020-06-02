@@ -1,14 +1,14 @@
-os.loadAPI("lib/move.lua")
+os.loadAPI("lib/path.lua")
 
 
 function left()
-	if move.turnLeft() then
+	if path.turnLeft() then
 		return turtle.inspect()
 	end
 end
 
 function right()
-	if move.turnRight() then
+	if path.turnRight() then
 		return turtle.inspect()
 	end
 end
@@ -26,7 +26,7 @@ function down()
 end
 
 function to(axis, direction)
-	move.turnTo(axis, direction)
+	path.turnTo(axis, direction)
 	return turtle.inspect()
 end
 
