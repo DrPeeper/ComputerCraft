@@ -30,17 +30,30 @@ function to(axis, direction)
 	return turtle.inspect()
 end
 
+DIR = {
+	UP = "UP",
+	DOWN = "DOWN",
+	FORWARD = "FORWARD",
+	LEFT = "LEFT",
+	RIGHT = "RIGHT",
+}
+
+CARDINALS = {
+	NORTH = "NORTH",
+	EAST = "EAST",
+	SOUTH = "SOUTH",
+	WEST = "WEST",
+}
 
 SCANS = {
-	UP = up,
-	DOWN = down,
-	FORWARD = forward,
-	LEFT = left,
-	RIGHT = right,
-	TO = to,
-	NORTH = to(2,1),
-	WEST = to(1,-1),
-	SOUTH = to(2,-1),
-	EAST = to(1,1)
+	"UP" = up,
+	"DOWN" = down,
+	"FORWARD" = forward,
+	"LEFT" = left,
+	"RIGHT" = right,
+	"NORTH" = to(2,1),
+	"WEST" = to(1,-1),
+	"SOUTH" = to(2,-1),
+	"EAST" = to(1,1),
 }
 
