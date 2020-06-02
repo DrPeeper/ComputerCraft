@@ -33,6 +33,10 @@ function getDirection()
 	return direction
 end
 
+function getHistory()
+	return history
+end
+
 -- return the axis and direction of if given the index of a cardinal direction
 function toDir(cardinal)
 	if cardinals[cardinal] then
