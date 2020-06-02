@@ -1,7 +1,10 @@
-BASE_URL = "https://raw.githubusercontent.com/DrPeeper/ComputerCraft/master"
+BASE_URL = "https://raw.githubusercontent.com/DrPeeper/ComputerCraft/nav2"
 
 -- add files here as our repo grows
 FILES = {
+	"/lib/path.lua",
+	"/lib/q.lua",
+	"/lib/scan.lua",
 	"/lib/fuel.lua",
 	"/lib/inv.lua",
 	"/lib/nav.lua",
