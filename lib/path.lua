@@ -309,7 +309,7 @@ function ifMove(dir)
 		tmp[3] = tmp[3] + 1
 	end
 	if dir == DIRS.DOWN then
-		tmp[3] = tm[3] - 1
+		tmp[3] = tmp[3] - 1
 	end
 	if dir == DIRS.FORWARD then
 		tmp[axis] = direction
