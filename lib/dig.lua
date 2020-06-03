@@ -73,7 +73,7 @@ end
 
 function vein()
 	local scans = {"FORWARD","UP", "DOWN", "LEFT", "LEFT", "LEFT"}
-	local digs = {"FORWARD","UP","DOWN","FORWARD","FORWARD","FORWARD"}	
+	local digs = {"FORWARD","UP","DOWN","FORWARD","FORWARD","FORWARD"}
 	local pos = {0,0,0}
 	for i,v in ipairs(path.getPosition()) do
 		pos[i] = v
@@ -95,6 +95,7 @@ function vein()
 					tmp[i]()
 					fuel.refuel()
 				end
+				local tmp = path.ifMove(digs[i])
 				if not path.getHistory()[table.concat(tmp,",")] then
 					path.ACTIONS["MOVE"][digs[i]]()
 					vein()
