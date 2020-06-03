@@ -313,10 +313,10 @@ function hQuery(dir)
 		tmp[3] = tmp[3] - 1
 	end
 	if dir == DIRS.FORWARD then
-		tmp[axis] = direction
+		tmp[axis] = direction + tmp[axis]
 	end
 	
-	return path.getHistory()[table.concat(tmp,",")]
+	return history[table.concat(tmp,",")]
 end
 
 ACTIONS = {
