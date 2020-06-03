@@ -300,7 +300,8 @@ function GoToB(dest, prev)
 	return false	
 end
 
-function ifMove(dir)
+-- return true if movement in the given direction is found in path.history
+function hQuery(dir)
 	local tmp = {0,0,0}
 	for i,v in ipairs(position) do
 		tmp[i] = v
@@ -314,7 +315,8 @@ function ifMove(dir)
 	if dir == DIRS.FORWARD then
 		tmp[axis] = direction
 	end
-	return tmp
+	
+	return path.getHistory()[table.concat(tmp,",")]
 end
 
 ACTIONS = {

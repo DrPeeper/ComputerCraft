@@ -79,15 +79,12 @@ function vein()
 		pos[i] = v
 	end
 	for i,v in ipairs(scans) do
+		local flag = false
 		local success, item = scan.SCANS[v]()
 		if success then
 			if  VALUABLES[item.name] then
 				path.ACTIONS["DIG"][digs[i]]()
-				local tmp = path.ifMove(digs[i])
-				if not path.getHistory()[table.concat(tmp,",")] then
-					path.ACTIONS["MOVE"][digs[i]]()
-					vein()
-				end
+				flag = true
 			end
 			if item.name == "minecraft:lava" and inv.selectByName("minecraft:bucket") then
 				if item.state.level == 0 then
@@ -95,11 +92,11 @@ function vein()
 					tmp[i]()
 					fuel.refuel()
 				end
-				local tmp = path.ifMove(digs[i])
-				if not path.getHistory()[table.concat(tmp,",")] then
-					path.ACTIONS["MOVE"][digs[i]]()
-					vein()
-				end
+				flag = true
+			end
+			if flag and not path.hQuery(digs[i]) then
+				path.ACTIONS["MOVE"][digs[i]]()
+				vein()
 			end
 		end
 	end
