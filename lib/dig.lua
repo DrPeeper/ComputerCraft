@@ -5,6 +5,7 @@ os.loadAPI("/lib/scan.lua")
 os.loadAPI("/lib/path.lua")
 
 VALUABLES = {
+   ["minecraft:obsidian"] = true,
    ["minecraft:redstone_ore"] = true,
    ["minecraft:redstone"] = true,
    ["minecraft:coal_ore"] = true,
