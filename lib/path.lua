@@ -18,7 +18,7 @@ function init()
 	position = {0,0,0}
 	axis = 2
 	direction = 1
-	history[table.concat(position),","] = true
+	history[table.concat(position,",")] = true
 end
 
 function getAxis()
@@ -119,7 +119,7 @@ function down()
 	fuel.refuel()
 	if turtle.down() then
 		position[3] = position[3] - 1
-		history[table.concat(position),","] = true
+		history[table.concat(position,",")] = true
 		return true
 	end
 	return false
