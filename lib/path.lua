@@ -301,7 +301,7 @@ function GoToB(dest, prev)
 end
 
 function ifMove(dir)
-	tmp = {0,0,0}
+	local tmp = {0,0,0}
 	for i,v in ipairs(position) do
 		tmp[i] = v
 	end
