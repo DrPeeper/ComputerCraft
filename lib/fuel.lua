@@ -5,12 +5,13 @@ FUEL = {
 	["minecraft:coal"]=80,
 	["minecraft:charcoal"]=80,
 	["minecraft:oak_planks"]=15,
+	["minecraft:lava_bucket"]=1000,
 }
 
 -- refuel a turtle if necessary
 -- returns false if out of fuel
 function refuel(threshold)
-	threshold = threshold or 1000  -- value of one coal
+	threshold = threshold or 80  -- value of one coal
 	initial_slot = turtle.getSelectedSlot()
 	while turtle.getFuelLevel() < threshold do
 		-- select coal
