@@ -1,6 +1,18 @@
 os.loadAPI("/lib/fuel.lua")
 os.loadAPI("/lib/q.lua")
 
+DIRS = {
+   UP="UP",
+   DOWN="DOWN",
+   FORWARD="FORWARD",
+}
+
+OPS = {
+   DIG="DIG",
+   MOVE="MOVE",
+}
+
+
 -- cardinal, axis, direction
 -- east, 1, 1
 -- north, 2, 1
@@ -288,17 +300,22 @@ function GoToB(dest, prev)
 	return false	
 end
 
-
-DIRS = {
-   UP="UP",
-   DOWN="DOWN",
-   FORWARD="FORWARD",
-}
-
-OPS = {
-   DIG="DIG",
-   MOVE="MOVE",
-}
+function ifMove(dir)
+	tmp = {0,0,0}
+	for i,v in ipairs(position) do
+		tmp[i] = v
+	end
+	if dir == DIRS.UP then
+		tmp[3] = tmp[3] + 1
+	end
+	if dir == DIRS.DOWN then
+		tmp[3] = tm[3] - 1
+	end
+	if dir == DIRS.FORWARD then
+		tmp[axis] = direction
+	end
+	return tmp
+end
 
 ACTIONS = {
    ["MOVE"] = {
