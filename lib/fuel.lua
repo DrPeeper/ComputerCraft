@@ -10,7 +10,7 @@ FUEL = {
 -- refuel a turtle if necessary
 -- returns false if out of fuel
 function refuel(threshold)
-	threshold = threshold or 80  -- value of one coal
+	threshold = threshold or 1000  -- value of one coal
 	initial_slot = turtle.getSelectedSlot()
 	while turtle.getFuelLevel() < threshold do
 		-- select coal
