@@ -73,7 +73,7 @@ end
 
 function vein()
 	local scans = {"FORWARD","UP", "DOWN", "LEFT", "LEFT", "LEFT"}
-	local digs = {"FORWARD","UP","DOWN","FORWARD","FORWARD","FORWARD"}
+	local digs = {"FORWARD","UP","DOWN","FORWARD","FORWARD","FORWARD"}	
 	local pos = {0,0,0}
 	for i,v in ipairs(path.getPosition()) do
 		pos[i] = v
@@ -83,8 +83,11 @@ function vein()
 		if success then
 			if  VALUABLES[item.name] then
 				path.ACTIONS["DIG"][digs[i]]()
-				path.ACTIONS["MOVE"][digs[i]]()
-				vein()
+				local tmp = path.ifMove(digs[i])
+				if not path.getHistory()[table.concat(tmp,",")] then
+					path.ACTIONS["MOVE"][digs[i]]()
+					vein()
+				end
 			end
 			if item.name == "minecraft:lava" and inv.selectByName("minecraft:bucket") then
 				if item.state.level == 0 then
@@ -92,8 +95,10 @@ function vein()
 					tmp[i]()
 					fuel.refuel()
 				end
-				path.ACTIONS["MOVE"][digs[i]]()
-				vein()
+				if not path.getHistory()[table.concat(tmp,",")] then
+					path.ACTIONS["MOVE"][digs[i]]()
+					vein()
+				end
 			end
 		end
 	end
