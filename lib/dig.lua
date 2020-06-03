@@ -87,11 +87,11 @@ function vein()
 				path.ACTIONS["DIG"][digs[i]]()
 				flag = true
 			end
-			if item.name == "minecraft:lava" and inv.selectByName("minecraft:bucket") then
+			if item.name == "minecraft:lava" and inv.selectByName("minecraft:bucket") then --TODO go back to previously selected slot
 				if item.state.level == 0 then
 					tmp = {turtle.place, turtle.placeUp, turtle.placeDown, turtle.place, turtle.place, turtle.place}
 					tmp[i]()
-					fuel.refuel(1000)
+					turtle.refuel()
 				end
 				flag = true
 			end
