@@ -51,9 +51,5 @@ SCANS = {
 	["FORWARD"] = forward,
 	["LEFT"] = left,
 	["RIGHT"] = right,
-	["NORTH"] = to(2,1),
-	["WEST"] = to(1,-1),
-	["SOUTH"] = to(2,-1),
-	["EAST"] = to(1,1),
 }
 
