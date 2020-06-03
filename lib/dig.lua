@@ -91,7 +91,7 @@ function vein()
 				if item.state.level == 0 then
 					tmp = {turtle.place, turtle.placeUp, turtle.placeDown, turtle.place, turtle.place, turtle.place}
 					tmp[i]()
-					fuel.refuel()
+					fuel.refuel(1000)
 				end
 				flag = true
 			end
