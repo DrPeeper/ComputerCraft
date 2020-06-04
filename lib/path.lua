@@ -2,9 +2,13 @@ os.loadAPI("/lib/fuel.lua")
 os.loadAPI("/lib/q.lua")
 
 DIRS = {
-   UP="UP",
-   DOWN="DOWN",
-   FORWARD="FORWARD",
+	UP = "UP",
+	DOWN = "DOWN",
+	FORWARD = "FORWARD",
+	BACK = "BACK",
+	LEFT = "LEFT",
+	RIGHT = "RIGHT",
+	AROUND = "AROUND"
 }
 
 OPS = {
@@ -12,26 +16,18 @@ OPS = {
    MOVE="MOVE",
 }
 
-
 -- cardinal, axis, direction
 -- east, 1, 1
 -- north, 2, 1
 -- west, 1, -1
 -- south, 2, -1
 cardinals = {"east","north","west","south"}
+
 local position = {0,0,0}
 local axis = 2
 local direction = 1
 local history = {}
-history[table.concat(position,",")] = true
-
--- instantiate current position
-function init()
-	position = {0,0,0}
-	axis = 2
-	direction = 1
-	history[table.concat(position,",")] = true
-end
+local steps = {}
 
 function getAxis()
 	return axis
@@ -47,6 +43,62 @@ end
 
 function getHistory()
 	return history
+end
+
+function calDir(turn)
+	tmp = {1,-1}
+	if turn == DIRS.LEFT then
+		return direction * tmp[axis]
+	end
+	if turn == DIRS.RIGHT then
+		return direction * - tmp[axis]
+	end
+	return direction
+end
+
+function hQuery(gPosition)
+	local gPosition = gPosition or position
+	return history[table.concat(gPosition,",")]
+end
+
+function hInsert(update, gPosition)
+	local gPosition = gPosition or position
+	local gPosition = table.concat(gPosition)
+	local update = update or {}
+
+	if history[gPosition] then
+		for i,v in pairs(update) do
+			history[gPosition][i] = v
+		end
+	else
+		history[gPosition] = update
+	end
+end
+
+-- insert starting position
+steps.insert(table.concat(position))
+
+-- instantiate current position
+function init()
+	position = {0,0,0}
+	axis = 2
+	direction = 1
+	steps.insert(table.concat(position))
+end
+
+function ifDir(dir)
+	local CARDS = {
+		["UP"] = {a = 3, d = 1},
+		["DOWN"] = {a = 3, d = -1},
+ 		["FORWARD"] = {a = getAxis(), d = getDirection()},
+ 		["LEFT"] = {a = getAxis() % 2 + 1, d = calDir("LEFT")},
+		["RIGHT"] = {a = getAxis() % 2 + 1, d = calDir("RIGHT")}
+	}
+
+	local turn = CARDS[dir]
+	local pPosition = position
+	pPosition[turn[a]] = pPosition[turn[a]] + turn[d]
+	return hQuery(pPosition)
 end
 
 -- return the axis and direction of if given the index of a cardinal direction
@@ -101,7 +153,7 @@ function forward()
 	fuel.refuel()
 	if turtle.forward() then
 		position[axis] = position[axis] + direction
-		history[table.concat(position,",")] = true
+		steps.insert(table.concat(position))
 		return true
 	end
 	return false
@@ -111,7 +163,7 @@ function back()
 	fuel.refuel()
 	if turtle.back() then
 		position[axis] = position[axis] - direction
-		history[table.concat(position,",")] = true
+		steps.insert(table.concat(position))
 		return true
 	end
 	return false
@@ -121,7 +173,7 @@ function up()
 	fuel.refuel()
 	if turtle.up() then
 		position[3] = position[3] + 1
-		history[table.concat(position,",")] = true
+		steps.insert(table.concat(position))
 		return true
 	end
 	return false
@@ -131,11 +183,28 @@ function down()
 	fuel.refuel()
 	if turtle.down() then
 		position[3] = position[3] - 1
-		history[table.concat(position,",")] = true
+		steps.insert(table.concat(position))
 		return true
 	end
 	return false
 end
+
+ACTIONS = {
+   ["MOVE"] = {
+      ["UP"] = up,
+      ["DOWN"] = down,
+      ["FORWARD"] = forward,
+      ["BACK"] = back,
+      ["LEFT"] = turnLeft,
+      ["RIGHT"] = turnRight,
+      ["AROUND"] = turnAround
+   },
+   ["DIG"] = {
+      ["UP"] = turtle.digUp,
+      ["DOWN"] = turtle.digDown,
+      ["FORWARD"] = turtle.dig,
+   },
+}
 
 -- turn given the opcode
 -- -1 = turn left
@@ -299,37 +368,3 @@ function GoToB(dest, prev)
 	end
 	return false	
 end
-
--- return true if movement in the given direction is found in path.history
-function hQuery(dir)
-	local tmp = {0,0,0}
-	for i,v in ipairs(position) do
-		tmp[i] = v
-	end
-	if dir == DIRS.UP then
-		tmp[3] = tmp[3] + 1
-	end
-	if dir == DIRS.DOWN then
-		tmp[3] = tmp[3] - 1
-	end
-	if dir == DIRS.FORWARD then
-		tmp[axis] = direction + tmp[axis]
-	end
-	
-	return history[table.concat(tmp,",")]
-end
-
-ACTIONS = {
-   ["MOVE"] = {
-      ["UP"] = up,
-      ["DOWN"] = down,
-      ["FORWARD"] = forward,
-      ["LEFT"] = turnLeft,
-      ["RIGHT"] = turnRight,
-   },
-   ["DIG"] = {
-      ["UP"] = turtle.digUp,
-      ["DOWN"] = turtle.digDown,
-      ["FORWARD"] = turtle.dig,
-   },
-}
