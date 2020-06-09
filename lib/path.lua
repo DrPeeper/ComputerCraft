@@ -45,6 +45,10 @@ function getHistory()
 	return history
 end
 
+function getSteps()
+	return steps
+end
+
 function calDir(turn)
 	tmp = {1,-1}
 	if turn == DIRS.LEFT then
