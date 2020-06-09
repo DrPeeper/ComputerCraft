@@ -76,14 +76,14 @@ function hInsert(update, gPosition)
 end
 
 -- insert starting position
-steps.insert(table.concat(position))
+table.insert(steps, table.concat(position))
 
 -- instantiate current position
 function init()
 	position = {0,0,0}
 	axis = 2
 	direction = 1
-	steps.insert(table.concat(position))
+	table.insert(steps, table.concat(position))
 end
 
 function ifDir(dir)
@@ -153,7 +153,7 @@ function forward()
 	fuel.refuel()
 	if turtle.forward() then
 		position[axis] = position[axis] + direction
-		steps.insert(table.concat(position))
+		table.insert(steps, table.concat(position))
 		return true
 	end
 	return false
@@ -163,7 +163,7 @@ function back()
 	fuel.refuel()
 	if turtle.back() then
 		position[axis] = position[axis] - direction
-		steps.insert(table.concat(position))
+		table.insert(steps, table.concat(position))
 		return true
 	end
 	return false
@@ -173,7 +173,7 @@ function up()
 	fuel.refuel()
 	if turtle.up() then
 		position[3] = position[3] + 1
-		steps.insert(table.concat(position))
+		table.insert(steps, table.concat(position))
 		return true
 	end
 	return false
@@ -183,7 +183,7 @@ function down()
 	fuel.refuel()
 	if turtle.down() then
 		position[3] = position[3] - 1
-		steps.insert(table.concat(position))
+		table.insert(steps, table.concat(position))
 		return true
 	end
 	return false
