@@ -67,7 +67,7 @@ end
 
 function hInsert(update, gPosition)
 	local gPosition = gPosition or position
-	local gPosition = table.concat(gPosition)
+	local gPosition = table.concat(gPosition, ",")
 	local update = update or {}
 
 	if history[gPosition] then
@@ -80,14 +80,14 @@ function hInsert(update, gPosition)
 end
 
 -- insert starting position
-table.insert(steps, table.concat(position))
+table.insert(steps, table.concat(position), ",")
 
 -- instantiate current position
 function init()
 	position = {0,0,0}
 	axis = 2
 	direction = 1
-	table.insert(steps, table.concat(position))
+	table.insert(steps, table.concat(position), ",")
 end
 
 function ifDir(dir)
@@ -157,7 +157,7 @@ function forward()
 	fuel.refuel()
 	if turtle.forward() then
 		position[axis] = position[axis] + direction
-		table.insert(steps, table.concat(position))
+		table.insert(steps, table.concat(position), ",")
 		return true
 	end
 	return false
@@ -167,7 +167,7 @@ function back()
 	fuel.refuel()
 	if turtle.back() then
 		position[axis] = position[axis] - direction
-		table.insert(steps, table.concat(position))
+		table.insert(steps, table.concat(position), ",")
 		return true
 	end
 	return false
@@ -177,7 +177,7 @@ function up()
 	fuel.refuel()
 	if turtle.up() then
 		position[3] = position[3] + 1
-		table.insert(steps, table.concat(position))
+		table.insert(steps, table.concat(position), ",")
 		return true
 	end
 	return false
@@ -187,7 +187,7 @@ function down()
 	fuel.refuel()
 	if turtle.down() then
 		position[3] = position[3] - 1
-		table.insert(steps, table.concat(position))
+		table.insert(steps, table.concat(position), ",")
 		return true
 	end
 	return false
