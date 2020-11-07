@@ -101,7 +101,7 @@ function ifDir(dir)
 
 	local turn = CARDS[dir]
 	local pPosition = position
-	pPosition[turn[a]] = pPosition[turn[a]] + turn[d]
+	pPosition[turn[a]] = pPosition[turn[a]] + turn[b]
 	return hQuery(pPosition)
 end
 
