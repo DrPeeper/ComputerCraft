@@ -97,7 +97,7 @@ function vein()
 				end
 				flag = true
 			end
-			if flag and not path.ifDir(digs[i]) then
+			if flag and not path.ifDir([digs[i]]) then
 				path.ACTIONS["MOVE"][digs[i]]()
 				vein()
 			end
