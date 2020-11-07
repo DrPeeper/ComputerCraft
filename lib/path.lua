@@ -100,9 +100,13 @@ function ifDir(dir)
 	}
 
 	local turn = CARDS[dir]
-	local pPosition = position
-	pPosition[turn[a]] = pPosition[turn[a]] + turn[d]
-	return hQuery(pPosition)
+	if turn then
+		local pPosition = position
+		pPosition[turn[a]] = pPosition[turn[a]] + turn[d]
+		return hQuery(pPosition)
+	else
+		print("invalid direction")
+	end
 end
 
 -- return the axis and direction of if given the index of a cardinal direction
