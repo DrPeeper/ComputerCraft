@@ -104,7 +104,7 @@ function vein()
 		end
 	end
 	if not path.GoTo(pos) then
-		if not path.GoTo(pos,true) then
+		if not path.goTo(pos,true) then
 			error("cannot backtrack")
 		end
 	end
