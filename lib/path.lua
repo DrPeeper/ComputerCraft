@@ -92,17 +92,17 @@ end
 
 function ifDir(dir)
 	local CARDS = {
-		["UP"] = {a = 3, d = 1},
-		["DOWN"] = {a = 3, d = -1},
- 		["FORWARD"] = {a = getAxis(), d = getDirection()},
- 		["LEFT"] = {a = getAxis() % 2 + 1, d = calDir("LEFT")},
-		["RIGHT"] = {a = getAxis() % 2 + 1, d = calDir("RIGHT")}
+		["UP"] = {3, 1},
+		["DOWN"] = {3, -1},
+ 		["FORWARD"] = {getAxis(), getDirection()},
+ 		["LEFT"] = {getAxis() % 2 + 1, calDir("LEFT")},
+		["RIGHT"] = {getAxis() % 2 + 1, calDir("RIGHT")}
 	}
 
 	local turn = CARDS[dir]
 	if turn then
 		local pPosition = position
-		pPosition[turn[a]] = pPosition[turn[a]] + turn[d]
+		pPosition[turn[1]] = pPosition[turn[1]] + turn[2]
 		return hQuery(pPosition)
 	else
 		print("invalid direction")
