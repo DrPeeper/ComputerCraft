@@ -79,6 +79,12 @@ function vein()
 	history = old_history
 end
 
+function printpos(pos)
+	for i,v in ipairs(pos)
+		print(v)
+	end
+end
+
 function vein1()
 	local scans = {"FORWARD","UP", "DOWN", "LEFT", "LEFT", "LEFT"}
 	local digs = {"FORWARD","UP","DOWN","FORWARD","FORWARD","FORWARD"}
@@ -111,6 +117,8 @@ function vein1()
 			end
 		end
 	end
+	print("going to")
+	printpos(pos)
 	if not path.GoTo(pos) then
 	 	error("cannot backtrack")
 	end
