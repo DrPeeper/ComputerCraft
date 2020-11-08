@@ -80,9 +80,7 @@ function vein()
 end
 
 function printpos(pos)
-	for i,v in ipairs(pos) do
-		print(v)
-	end
+	print(pos[1] .. pos[2] .. pos[3])
 end
 
 function vein1()
@@ -95,6 +93,10 @@ function vein1()
 	for i,v in ipairs(path.getPosition()) do
 		pos[i] = v
 	end
+	
+	print("position")
+	printpos()
+	
 	for i,v in ipairs(scans) do
 		local flag = false
 		local success, item = scan.SCANS[v]()
@@ -117,7 +119,7 @@ function vein1()
 			end
 		end
 	end
-	print("going to")
+	print("returning to")
 	printpos(pos)
 	if not path.GoTo(pos) then
 	 	error("cannot backtrack")
