@@ -75,9 +75,10 @@ end
 function vein()
 	local scans = {"FORWARD","UP", "DOWN", "LEFT", "LEFT", "LEFT"}
 	local digs = {"FORWARD","UP","DOWN","FORWARD","FORWARD","FORWARD"}
-	local pos = path.getPosition()
 	local dir = path.getDirection()
 	local axis = path.getAxis()
+	local pos = {0,0,0}
+	
 	for i,v in ipairs(path.getPosition()) do
 		pos[i] = v
 	end
