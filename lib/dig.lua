@@ -95,7 +95,7 @@ function vein1()
 	end
 	
 	print("position")
-	printpos()
+	printpos(pos)
 	
 	for i,v in ipairs(scans) do
 		local flag = false
