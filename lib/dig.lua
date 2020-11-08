@@ -80,7 +80,7 @@ function vein()
 end
 
 function printpos(pos)
-	for i,v in ipairs(pos)
+	for i,v in ipairs(pos) do
 		print(v)
 	end
 end
