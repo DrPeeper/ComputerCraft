@@ -289,11 +289,39 @@ function goTo(dest, back)
 		local record = {}
 		return GoToB(dest,record)
 	else
-		return GoTo(dest)
+		return GoToW(dest)
 	end
 end
 
 function GoTo(dest)
+	if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
+		return true
+	end
+	for i,v in ipairs(dest) do
+		local diff = v - position[i]
+		if diff ~= 0 then
+			local dir = 0
+			if diff > 0 then
+				dir = 1
+			else
+				dir = -1
+			end
+			if moveTo(i,dir) then
+				if GoTo(dest) then
+					break
+				end
+			end
+		end
+	end
+	
+	if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
+		return true
+	else
+		return false
+	end
+end
+
+function GoToW(dest)
 	if dest[1] == position[1] and dest[2] == position[2] and dest[3] == position[3] then
 		return true
 	end
