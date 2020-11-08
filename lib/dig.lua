@@ -73,6 +73,13 @@ function manageInv(valuables)
 end
 
 function vein()
+	local old_history = history
+	history = {}
+	vein1()
+	history = old_history
+end
+
+function vein1()
 	local scans = {"FORWARD","UP", "DOWN", "LEFT", "LEFT", "LEFT"}
 	local digs = {"FORWARD","UP","DOWN","FORWARD","FORWARD","FORWARD"}
 	local dir = path.getDirection()
