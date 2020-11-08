@@ -104,9 +104,7 @@ function vein()
 		end
 	end
 	if not path.GoTo(pos) then
-		if not path.goTo(pos,true) then
-			error("cannot backtrack")
-		end
+	 	error("cannot backtrack")
 	end
 	path.turnTo(axis,dir)
 end
